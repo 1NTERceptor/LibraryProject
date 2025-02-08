@@ -28,7 +28,7 @@ namespace WebService.Controllers
         public async Task<IEnumerable<Book>> GetAll()
         {
             return await _library.GetBooks();
-}
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)

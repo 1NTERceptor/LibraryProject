@@ -29,9 +29,7 @@ namespace WebService
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-
-            services.AddControllers();
+        {           
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "miniProject", Version = "v1" });
@@ -47,7 +45,20 @@ namespace WebService
             services.AddMediatR(typeof(PeopleCommandsHandlers).Assembly);
 
             services.AddScoped<IBookRepository, BookRepository>();
-            services.AddScoped<Library.Domain.Repository.IPersonRepository, PersonRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
+
+            // Dodaj CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +71,8 @@ namespace WebService
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "miniProject v1"));
             }
 
+            app.UseCors("AllowAll");
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -70,7 +83,7 @@ namespace WebService
             });
 
             AddFirstBooks(app.ApplicationServices);
-            AddFirstPersons(app.ApplicationServices);
+            AddFirstPersons(app.ApplicationServices);            
         }
 
         private void AddFirstBooks(IServiceProvider serviceProvider)

@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace REST_API.QueriesHandlers
 {
-    public class PeopleQueriesHandlers : 
+    public class PeopleQueryHandlers : 
         IRequestHandler<GetAllPersons, IEnumerable<Person>>,
         IRequestHandler<GetPersonById, Person>,
         IRequestHandler<GetGuestBorrowedBooksByGuestId, IEnumerable<GuestBook>>
     {
         private readonly IPeople _persons;
 
-        public PeopleQueriesHandlers(IPeople persons) 
+        public PeopleQueryHandlers(IPeople persons) 
         {
             _persons = persons;
         }
