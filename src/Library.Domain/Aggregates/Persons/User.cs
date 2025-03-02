@@ -8,7 +8,7 @@ using System.Net;
 
 namespace Library.Domain.Aggregates
 {
-    public class Guest : Person
+    public class User : Person
     {
         public string GuestCardNumber { get; private set; }
 
@@ -16,12 +16,14 @@ namespace Library.Domain.Aggregates
 
         public virtual  ICollection<GuestBook> BorrowedBooks { get; set; } = new List<GuestBook>();
 
-        public static Guest CreateGuest(string firstName, string lastName, string guestCardNumber, string login)
+        public static User CreateUser(string firstName, string lastName, string guestCardNumber, string login)
         {
-            return new Guest(firstName,  lastName, guestCardNumber, login);
+            return new User(firstName,  lastName, guestCardNumber, login);
         }
 
-        private Guest(string firstName, string lastName, string guestCardNumber, string login) : base(firstName, lastName, login) 
+        public User() { }
+
+        private User(string firstName, string lastName, string guestCardNumber, string login) : base(firstName, lastName, login) 
         {
             GuestCardNumber = guestCardNumber;
 

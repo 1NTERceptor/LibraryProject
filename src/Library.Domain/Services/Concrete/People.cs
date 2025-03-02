@@ -13,28 +13,6 @@ namespace Library.Domain.Services
     public class People : IPeople
     {
         private readonly IPersonRepository _repository;
-        private static People _instance;
-        private static readonly object _lock = new object();
-
-        //public static People GetInstance(DataContext context)
-        //{
-        //    if (_instance == null)
-        //    {
-        //        lock (_lock)
-        //        {
-        //            if (_instance == null)
-        //            {
-        //                _instance = new People(context);
-        //            }
-        //        }
-        //    }
-        //    return _instance;
-        //}
-
-        //private People(DataContext context)
-        //{
-        //    _context = context;
-        //}
 
         public People(IPersonRepository repository)
         {
@@ -44,6 +22,18 @@ namespace Library.Domain.Services
         public async Task<IEnumerable<Person>> GetPersons()
         {
             return await _repository.GetAllAsync();
+        }
+
+        public async Task<IEnumerable<Worker>> GetWorkers()
+        {
+            var workers = await _repository.GetAllWorkersAsync();
+
+            return workers;
+        }
+
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            return await _repository.GetAllUsersAsync();
         }
 
         public async Task<IEnumerable<GuestBook>> GetGuestBooks(int guestId)
@@ -56,17 +46,17 @@ namespace Library.Domain.Services
             var person = await _repository.GetByIdAsync(id);
 
             if (person == default)
-                Task.FromResult<Person>(null);      
+                await Task.FromResult<Person>(null);      
             
-            if(person is Guest guest)
+            if(person is User guest)
                 return await _repository.GetGuestByIdAsync(id);
 
             return person;
         }
 
-        public async Task<Guest> CreateGuest(string firstName, string lastName, string guestCardNumber)
+        public async Task<User> CreateGuest(string firstName, string lastName, string guestCardNumber)
         {
-            var guest = Guest.CreateGuest(firstName, lastName, guestCardNumber, null);
+            var guest = User.CreateUser(firstName, lastName, guestCardNumber, null);
 
             await _repository.AddAsync(guest);
 
@@ -115,6 +105,6 @@ namespace Library.Domain.Services
             {
                 propertyInfo.SetValue(person, value, null);
             }
-        }
+        }        
     }
 }

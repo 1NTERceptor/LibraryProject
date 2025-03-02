@@ -1,0 +1,46 @@
+﻿@page "/workerslist"
+@using BlazorApp.Services
+@using Library.Domain.Aggregates
+@inject LibraryClient LibraryClient
+
+<h1>Lista pracowników</h1>
+
+<p>Aktualnie zarejestrowani pracownicy:</p>
+
+@if (workers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Numer karty</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var worker in workers)
+            {
+                <tr>
+                    <td>@worker.Id</td>
+                    <td>@worker.FirstName</td>
+                    <td>@worker.LastName</td>
+                    <td>@worker.EmployeeCardNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<Worker> workers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        workers = await LibraryClient.GetWorkersAsync();
+    }
+ }

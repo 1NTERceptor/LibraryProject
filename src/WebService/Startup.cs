@@ -126,7 +126,7 @@ namespace WebService
             {
                 var context = scope.ServiceProvider.GetRequiredService<DataContext>();
 
-                PersonCreatorDelegate guestCreator = Guest.CreateGuest;
+                PersonCreatorDelegate guestCreator = User.CreateUser;
                 var guestFactory = new PersonFactory(guestCreator);
                 PersonCreatorDelegate workerCreator = Worker.CreateWorker;
                 var workerFactory = new PersonFactory(workerCreator);

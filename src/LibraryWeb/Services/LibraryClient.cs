@@ -1,4 +1,5 @@
 ﻿using Library.Domain.Aggregates;
+using Library.Domain.Models;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -17,7 +18,19 @@ namespace BlazorApp.Services
 
         public async Task<List<Book>> GetBooksAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<Book>>("api/v1/books");
+            var books = await _httpClient.GetFromJsonAsync<List<Book>>("api/v1/books");
+            return books;
+        }
+
+        public async Task<List<Worker>> GetWorkersAsync()
+        {
+            var workers = await _httpClient.GetFromJsonAsync<List<Worker>>("api/v1/persons/workers");
+            return workers;
+        }
+
+        public async Task<List<UserModel>> GetUsersAsync()
+        {
+            return await _httpClient.GetFromJsonAsync<List<UserModel>>("api/v1/persons/users");
         }
     }
 }
