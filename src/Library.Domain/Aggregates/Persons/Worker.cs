@@ -11,6 +11,8 @@ namespace Library.Domain.Aggregates
             return new Worker(firstName, lastName, employeeCardNumber, login);
         }
 
+        public Worker() { }
+
         private Worker(string firstName, string lastName, string employeeCardNumber, string login) : base(firstName, lastName, login)
         {
             EmployeeCardNumber = employeeCardNumber;

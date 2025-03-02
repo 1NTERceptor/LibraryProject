@@ -8,10 +8,15 @@ namespace Library.Domain.Services
     public interface IPeople
     {
         Task<IEnumerable<Person>> GetPersons();
+
+        Task<IEnumerable<Worker>> GetWorkers();
+
+        Task<IEnumerable<User>> GetUsers();
+
         Task<IEnumerable<GuestBook>> GetGuestBooks(int guestId);
 
         Task<Person> GetPersonById(int id);
-        Task<Guest> CreateGuest(string firstName, string lastName, string guestCardNumber);
+        Task<User> CreateGuest(string firstName, string lastName, string guestCardNumber);
 
         Task<bool> EditPerson(int id, Person person);
 

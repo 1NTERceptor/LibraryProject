@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebService.Controllers;
 
@@ -31,6 +32,20 @@ namespace REST_API.Controllers
         public async Task<ActionResult> Index()
         {
             return Ok(await _mediator.Send(new GetAllPersons()));
+        }
+
+        [HttpGet("workers")]
+        public async Task<IEnumerable<Worker>> GetAllWorkers()
+        {
+            var workers = await _mediator.Send(new GetAllWorkers());
+            return workers;
+        }
+
+        [HttpGet("users")]
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            var users = await _mediator.Send(new GetAllUsers());
+            return users;
         }
 
         [HttpGet("borrowed/{id}")]

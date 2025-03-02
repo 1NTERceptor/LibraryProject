@@ -14,7 +14,7 @@ namespace Library.Domain
 
         public DbSet<Person> Persons { get; set; }
 
-        public DbSet<Guest> Guests { get; set; }
+        public DbSet<User> Guests { get; set; }
 
         public DbSet<Book> Books { get; set; }
 
@@ -32,7 +32,7 @@ namespace Library.Domain
 
             modelBuilder.Entity<Person>()
                 .HasDiscriminator<string>("PersonType")
-                .HasValue<Guest>("Guest")
+                .HasValue<User>("Guest")
                 .HasValue<Worker>("Worker");
 
             modelBuilder.Entity<GuestBook>()

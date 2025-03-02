@@ -1,13 +1,14 @@
-﻿@page "/mysite"
+﻿@page "/userslist"
 @using BlazorApp.Services
 @using Library.Domain.Aggregates
+@using Library.Domain.Models
 @inject LibraryClient LibraryClient
 
-<h1>Na razie nic tu nie ma</h1>
+<h1>Spis użytkowników</h1>
 
-<p>Książki do wypożyczenia.</p>
+<p>Użytkownicy zarejestrowani w systemie:</p>
 
-@if (books == null)
+@if (Users == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -23,13 +24,13 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var book in books)
+            @foreach (var user in Users)
             {
                 <tr>
-                    <td>@book.Title</td>
-                    <td>@book.Author</td>
-                    <td>@book.ReleaseDate</td>
-                    <td>@book.Description</td>
+                    <td>@user.Id</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.City</td>
                 </tr>
             }
         </tbody>
@@ -37,10 +38,10 @@ else
 }
 
 @code {
-    private IEnumerable<Book> books;
+    private IEnumerable<UserModel> Users;
 
     protected override async Task OnInitializedAsync()
     {
-        books = await LibraryClient.GetBooksAsync();
+        Users = await LibraryClient.GetUsersAsync();
     }
  }

@@ -5,15 +5,20 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
+using Library.Domain.Enumes;
 
 namespace Library.Domain.Repository
 {
     public interface IPersonRepository
     {
         Task<Person> GetByIdAsync(int id);
-        Task<Guest> GetGuestByIdAsync(int id);
+        Task<User> GetGuestByIdAsync(int id);
         Task<IEnumerable<GuestBook>> GetGuestBookByGuestIdAsync(int id);
         Task<IEnumerable<Person>> GetAllAsync();
+
+        Task<IEnumerable<Worker>> GetAllWorkersAsync();
+
+        Task<IEnumerable<User>> GetAllUsersAsync();
         Task AddAsync(Person person);
         Task UpdateAsync(Person person);
         Task UpdateAsync(GuestBook guestBook);
@@ -35,7 +40,7 @@ namespace Library.Domain.Repository
             return await _context.Persons.FindAsync(id);
         }
 
-        public async Task<Guest> GetGuestByIdAsync(int id)
+        public async Task<User> GetGuestByIdAsync(int id)
         {
             return await _context.Guests
                 .Include(g => g.BorrowedBooks)
@@ -61,7 +66,7 @@ namespace Library.Domain.Repository
 
         public async Task UpdateAsync(Person person)
         {
-            if (person is Guest guest)
+            if (person is User guest)
             {
                 _context.Guests.Update(guest);
             }
@@ -92,6 +97,20 @@ namespace Library.Domain.Repository
         {
             _context.GuestBooks.Update(guestBook);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Worker>> GetAllWorkersAsync()
+        {
+            var workers = await _context.Set<Worker>().ToListAsync();
+
+            return workers;
+        }
+
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            var users = await _context.Set<User>().ToListAsync();
+
+            return users;
         }
     }
 }

@@ -1,0 +1,46 @@
+﻿@page "/bookscatalog"
+@using BlazorApp.Services
+@using Library.Domain.Aggregates
+@inject LibraryClient LibraryClient
+
+<h1>Spis książek</h1>
+
+<p>Książki do wypożyczenia:</p>
+
+@if (books == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tytuł</th>
+                <th>Autor</th>
+                <th>Rok wydania</th>
+                <th>Opis</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in books)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.ReleaseDate</td>
+                    <td>@book.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<Book> books;
+
+    protected override async Task OnInitializedAsync()
+    {
+        books = await LibraryClient.GetBooksAsync();
+    }
+ }
