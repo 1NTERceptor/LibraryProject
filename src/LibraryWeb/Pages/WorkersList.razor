@@ -1,6 +1,6 @@
 ﻿@page "/workerslist"
 @using BlazorApp.Services
-@using Library.Domain.Aggregates
+@using Library.Domain.Models
 @inject LibraryClient LibraryClient
 
 <h1>Lista pracowników</h1>
@@ -37,7 +37,7 @@ else
 }
 
 @code {
-    private IEnumerable<Worker> workers;
+    private IEnumerable<WorkerModel> workers;
 
     protected override async Task OnInitializedAsync()
     {

@@ -18,14 +18,12 @@ namespace BlazorApp.Services
 
         public async Task<List<Book>> GetBooksAsync()
         {
-            var books = await _httpClient.GetFromJsonAsync<List<Book>>("api/v1/books");
-            return books;
+            return await _httpClient.GetFromJsonAsync<List<Book>>("api/v1/books");
         }
 
-        public async Task<List<Worker>> GetWorkersAsync()
+        public async Task<List<WorkerModel>> GetWorkersAsync()
         {
-            var workers = await _httpClient.GetFromJsonAsync<List<Worker>>("api/v1/persons/workers");
-            return workers;
+            return await _httpClient.GetFromJsonAsync<List<WorkerModel>>("api/v1/persons/workers");
         }
 
         public async Task<List<UserModel>> GetUsersAsync()
