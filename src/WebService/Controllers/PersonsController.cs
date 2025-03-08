@@ -37,15 +37,13 @@ namespace REST_API.Controllers
         [HttpGet("workers")]
         public async Task<IEnumerable<Worker>> GetAllWorkers()
         {
-            var workers = await _mediator.Send(new GetAllWorkers());
-            return workers;
+            return await _mediator.Send(new GetAllWorkers());
         }
 
         [HttpGet("users")]
         public async Task<IEnumerable<User>> GetAllUsers()
         {
-            var users = await _mediator.Send(new GetAllUsers());
-            return users;
+            return await _mediator.Send(new GetAllUsers());
         }
 
         [HttpGet("borrowed/{id}")]
