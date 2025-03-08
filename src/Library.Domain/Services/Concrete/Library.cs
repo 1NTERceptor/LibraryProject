@@ -55,7 +55,7 @@ namespace Library.Domain.Services
 
         public async IAsyncEnumerable<Book> GetBooksSeries(string author)
         {
-            foreach(var book in _repository.GetAll())
+            foreach(var book in await _repository.GetAll())
             {
                 if(book.Author.ToLower() == author.ToLower())
                     yield return book;
@@ -64,7 +64,7 @@ namespace Library.Domain.Services
 
         public async Task<bool> AddBook(Book book)
         {
-            if (_repository.GetAll().Any(b => b.Title.ToLower() == book.Title.ToLower()))
+            if ((await _repository.GetAll()).Any(b => b.Title.ToLower() == book.Title.ToLower()))
                 return false;
 
             await _repository.AddAsync(book);

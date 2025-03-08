@@ -1,8 +1,6 @@
 ﻿using Library.Domain.Aggregates;
 using Library.Domain.Aggregates.Persons;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 
 namespace Library.Domain
 {

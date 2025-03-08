@@ -1,10 +1,7 @@
 ﻿using Library.Domain.Aggregates.Persons;
 using Library.Domain.CQRS.Events.Person;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 
 namespace Library.Domain.Aggregates
 {

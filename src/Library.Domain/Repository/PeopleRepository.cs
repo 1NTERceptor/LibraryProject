@@ -3,9 +3,6 @@ using Library.Domain.Aggregates.Persons;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
-using System;
-using Library.Domain.Enumes;
 
 namespace Library.Domain.Repository
 {
@@ -55,7 +52,7 @@ namespace Library.Domain.Repository
 
         public async Task<IEnumerable<GuestBook>> GetGuestBookByGuestIdAsync(int id)
         {
-            return _context.Guests.FirstOrDefault(g => g.Id == id).BorrowedBooks;
+            return (await _context.Guests.FirstOrDefaultAsync(g => g.Id == id)).BorrowedBooks;
         }
 
         public async Task AddAsync(Person person)

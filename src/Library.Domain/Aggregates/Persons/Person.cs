@@ -1,5 +1,4 @@
 ﻿using Abstracts.DDD;
-using System;
 
 namespace Library.Domain.Aggregates
 {
