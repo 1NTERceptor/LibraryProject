@@ -1,7 +1,6 @@
 ﻿using Library.Domain.Aggregates;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Library.Domain.Repository
@@ -9,7 +8,7 @@ namespace Library.Domain.Repository
     public interface IBookRepository
     {
         Task<Book> GetByIdAsync(int id);
-        IEnumerable<Book> GetAll();
+        Task<IEnumerable<Book>> GetAll();
         Task<IEnumerable<Book>> GetAllAsync();
         Task AddAsync(Book book);
         Task UpdateAsync(Book book);
@@ -35,9 +34,9 @@ namespace Library.Domain.Repository
             return await _context.Books.ToListAsync();
         }
 
-        public IEnumerable<Book> GetAll()
+        public async Task<IEnumerable<Book>> GetAll()
         {
-            return _context.Books.ToList();
+            return await _context.Books.ToListAsync();
         }
 
         public async Task AddAsync(Book book)

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Library.Domain.Aggregates.Persons
+﻿namespace Library.Domain.Aggregates.Persons
 {
     public class GuestBook
     {

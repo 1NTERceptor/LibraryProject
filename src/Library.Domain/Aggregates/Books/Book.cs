@@ -1,6 +1,5 @@
 using Abstracts.DDD;
 using Library.Domain.CQRS.Events.Book;
-using Library.Domain.CQRS.Events.Person;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -78,9 +77,9 @@ namespace Library.Domain.Aggregates
 
             IsBorrowed = true;
 
-            return true;
-
             AddDomainEvent(new BookBorrowed(Id, guestId));
+
+            return true;            
         }
     }
 }

@@ -65,7 +65,7 @@ namespace WebService.Controllers
         }
 
         [HttpGet("series/{author}")]
-        public async Task<IActionResult> GetBooksSeries(string author)
+        public IActionResult GetBooksSeries(string author)
         {
             var books = _library.GetBooksSeries(author);
 

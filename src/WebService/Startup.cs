@@ -4,7 +4,6 @@ using Library.Domain.Aggregates.Builders;
 using Library.Domain.CommandsHandlers;
 using Library.Domain.Repository;
 using Library.Domain.Services;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -41,8 +40,11 @@ namespace WebService
                 options.UseInMemoryDatabase("LibraryDB")
             );
 
-            services.AddMediatR(typeof(Startup));
-            services.AddMediatR(typeof(PeopleCommandsHandlers).Assembly);
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly);
+                cfg.RegisterServicesFromAssembly(typeof(PeopleCommandsHandlers).Assembly);
+            });
 
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
