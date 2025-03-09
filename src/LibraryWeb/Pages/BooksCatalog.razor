@@ -1,6 +1,6 @@
 ﻿@page "/bookscatalog"
 @using BlazorApp.Services
-@using Library.Domain.Aggregates
+@using Library.Messages.Models
 @inject LibraryClient LibraryClient
 
 <h1>Spis książek</h1>
@@ -37,7 +37,7 @@ else
 }
 
 @code {
-    private IEnumerable<Book> books;
+    private IEnumerable<BookModel> books;
 
     protected override async Task OnInitializedAsync()
     {

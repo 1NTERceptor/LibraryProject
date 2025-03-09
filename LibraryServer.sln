@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Domain", "src\Libra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebService", "src\WebService\WebService.csproj", "{A72408B7-1321-449B-8611-6D4DA433AC36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Messages", "src\Library.Messages\Library.Messages.csproj", "{061279CD-5235-4499-97FD-805F87A292C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A72408B7-1321-449B-8611-6D4DA433AC36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A72408B7-1321-449B-8611-6D4DA433AC36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A72408B7-1321-449B-8611-6D4DA433AC36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{061279CD-5235-4499-97FD-805F87A292C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{061279CD-5235-4499-97FD-805F87A292C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{061279CD-5235-4499-97FD-805F87A292C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{061279CD-5235-4499-97FD-805F87A292C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

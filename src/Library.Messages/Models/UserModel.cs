@@ -1,4 +1,4 @@
-﻿namespace Library.Domain.Models
+﻿namespace Library.Messages.Models
 {
     public class UserModel : ModelBase
     {
