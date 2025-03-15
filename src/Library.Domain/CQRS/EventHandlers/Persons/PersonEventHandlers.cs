@@ -1,4 +1,5 @@
-﻿using Library.Domain.CQRS.Events.Person;
+﻿using Library.Messages.Events.User;
+using Library.Messages.Events.Worker;
 using MediatR;
 using System;
 using System.Threading;

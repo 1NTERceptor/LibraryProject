@@ -2,7 +2,7 @@
 
 namespace Library.Domain.Aggregates
 {
-    public class Person : AggregateRoot
+    public abstract class Person : AggregateRoot
     {
         public string Login { get; private set; }
 

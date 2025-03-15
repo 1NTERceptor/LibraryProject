@@ -1,7 +1,8 @@
 ﻿using Library.Domain.Aggregates;
-using Library.Domain.CQRS.Commands;
 using Library.Domain.CQRS.Queries;
-using Library.Domain.Services;
+using Library.Domain.Repository;
+using Library.Messages.Commands;
+using Library.Messages.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,44 +19,26 @@ namespace REST_API.Controllers
     public class PersonsController : ControllerBase
     {
         private readonly ILogger<LibraryController> _logger;
-        private readonly IPeople _persons;
         private readonly IMediator _mediator;
+        private readonly IPersonRepository _personRepository;
 
-        public PersonsController(ILogger<LibraryController> logger, IPeople persons, IMediator mediator)
+        public PersonsController(ILogger<LibraryController> logger, IMediator mediator, IPersonRepository personRepository)
         {
             _logger = logger;
-            _persons = persons;
             _mediator = mediator;
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> Index()
-        {
-            return Ok(await _mediator.Send(new GetAllPersons()));
+            _personRepository = personRepository;
         }
 
         [HttpGet("workers")]
-        public async Task<IEnumerable<Worker>> GetAllWorkers()
+        public async Task<IEnumerable<WorkerModel>> GetAllWorkers()
         {
             return await _mediator.Send(new GetAllWorkers());
         }
 
         [HttpGet("users")]
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<IEnumerable<UserModel>> GetAllUsers()
         {
             return await _mediator.Send(new GetAllUsers());
-        }
-
-        [HttpGet("borrowed/{id}")]
-        public async Task<ActionResult> BorrowedBooks(int id)
-        {
-            return Ok(await _mediator.Send(new GetGuestBorrowedBooksByGuestId(id)));
-        }
-
-        [HttpGet("details/{id}")]
-        public async Task<ActionResult> Details(int id)
-        {
-            return Ok(await _mediator.Send(new GetPersonById(id)));
         }
 
         [HttpPost("create")]
@@ -66,34 +49,12 @@ namespace REST_API.Controllers
             return Ok(await _mediator.Send(command));
         }
 
-        [HttpPost("borrow")]
-        public async Task<IActionResult> BorrowBook([FromBody] CreateBorrowBook request)
-        {
-            var command = new CreateBorrowBook(request.BookId, request.GuestId);
-
-            return Ok(await _mediator.Send(command));
-        }
-
-        [HttpPost("edit/{id}")]
-        public async Task<ActionResult> Edit(int id, string firstName)
-        {
-            var person = new Person(firstName, "lastName", "login");
-            var result = await _persons.EditPerson(id, person);
-
-            if (result == false)
-                return NotFound();
-
-            return Ok();
-        }
-
         // GET: UsersController/Delete/5
         [HttpGet("delete/{id}")]
         public ActionResult Delete(int id)
         {
             return Ok();
         }
-
-
 
         // POST: UsersController/Delete/5
         [HttpPost("delete/{id}")]
@@ -102,7 +63,7 @@ namespace REST_API.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(id));
             }
             catch
             {

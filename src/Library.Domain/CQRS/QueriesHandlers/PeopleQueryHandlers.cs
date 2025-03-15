@@ -1,7 +1,8 @@
-﻿using Library.Domain.Aggregates;
-using Library.Domain.Aggregates.Persons;
+﻿using AutoMapper;
+using Library.Domain.Aggregates;
 using Library.Domain.CQRS.Queries;
-using Library.Domain.Services;
+using Library.Domain.Repository;
+using Library.Messages.Models;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,44 +11,28 @@ using System.Threading.Tasks;
 namespace REST_API.QueriesHandlers
 {
     public class PeopleQueryHandlers : 
-        IRequestHandler<GetAllPersons, IEnumerable<Person>>,
-        IRequestHandler<GetPersonById, Person>,
-        IRequestHandler<GetGuestBorrowedBooksByGuestId, IEnumerable<GuestBook>>,
-        IRequestHandler<GetAllWorkers, IEnumerable<Worker>>,
-        IRequestHandler<GetAllUsers, IEnumerable<User>>
+        IRequestHandler<GetAllWorkers, IEnumerable<WorkerModel>>,
+        IRequestHandler<GetAllUsers, IEnumerable<UserModel>>
     {
-        private readonly IPeople _persons;
+        private readonly IPersonRepository _personRepository;
+        private readonly IMapper _mapper;
 
-        public PeopleQueryHandlers(IPeople persons) 
+        public PeopleQueryHandlers(IPersonRepository personRepository, IMapper mapper) 
         {
-            _persons = persons;
+            _personRepository = personRepository;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Person>> Handle(GetAllPersons request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<WorkerModel>> Handle(GetAllWorkers request, CancellationToken cancellationToken)
         {
-            return await _persons.GetPersons();
+            var workers = await _personRepository.GetAllWorkersAsync();
+            return _mapper.Map<IEnumerable<WorkerModel>>(workers);
         }
 
-        public async Task<Person> Handle(GetPersonById request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<UserModel>> Handle(GetAllUsers request, CancellationToken cancellationToken)
         {
-            return await _persons.GetPersonById(request.PersonId);
-        }
-
-        public async Task<IEnumerable<GuestBook>> Handle(GetGuestBorrowedBooksByGuestId request, CancellationToken cancellationToken)
-        {
-            return await _persons.GetGuestBooks(request.GuestId);
-        }
-
-        public async Task<IEnumerable<Worker>> Handle(GetAllWorkers request, CancellationToken cancellationToken)
-        {
-            var workers = await _persons.GetWorkers();
-            return workers;
-        }
-
-        public async Task<IEnumerable<User>> Handle(GetAllUsers request, CancellationToken cancellationToken)
-        {
-            var users = await _persons.GetUsers();
-            return users;
+            var users = await _personRepository.GetAllUsersAsync();
+            return _mapper.Map<IEnumerable<UserModel>>(users);
         }
     }
 }

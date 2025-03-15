@@ -1,6 +1,7 @@
+using AutoMapper;
 using Library.Domain;
 using Library.Domain.Aggregates;
-using Library.Domain.Aggregates.Builders;
+using Library.Domain.Aggregates.Borrow.Builders;
 using Library.Domain.CommandsHandlers;
 using Library.Domain.Repository;
 using Library.Domain.Services;
@@ -28,14 +29,12 @@ namespace WebService
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {           
+        {
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "miniProject", Version = "v1" });
             });
 
-            services.AddScoped<ILibrary, Library.Domain.Services.Library>();
-            services.AddScoped<IPeople, People>();
             services.AddDbContext<DataContext>(options =>
                 options.UseInMemoryDatabase("LibraryDB")
             );
@@ -46,8 +45,12 @@ namespace WebService
                 cfg.RegisterServicesFromAssembly(typeof(PeopleCommandsHandlers).Assembly);
             });
 
-            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IDataContext, DataContext>();
+            services.AddScoped<IFileReader, FileReader>();
+            services.AddAutoMapper(typeof(LibraryMapper));
+            services.AddScoped<IBorrowRepository, BorrowRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
+
 
             // Dodaj CORS
             services.AddCors(options =>
@@ -85,7 +88,7 @@ namespace WebService
             });
 
             AddFirstBooks(app.ApplicationServices);
-            AddFirstPersons(app.ApplicationServices);            
+            AddFirstPersons(app.ApplicationServices);
         }
 
         private void AddFirstBooks(IServiceProvider serviceProvider)
@@ -129,13 +132,13 @@ namespace WebService
                 var context = scope.ServiceProvider.GetRequiredService<DataContext>();
 
                 PersonCreatorDelegate guestCreator = User.CreateUser;
-                var guestFactory = new PersonFactory(guestCreator);
+                var userFactory = new PersonFactory(guestCreator);
                 PersonCreatorDelegate workerCreator = Worker.CreateWorker;
                 var workerFactory = new PersonFactory(workerCreator);
 
-                context.Persons.Add(workerFactory.CreatePerson("Zuzanna", "Kowalska", "W1234", "zkowalska"));
-                context.Persons.Add(guestFactory.CreatePerson("Janusz", "Kowalski", "G1234", null));
-                context.Persons.Add(guestFactory.CreatePerson("Antoni", "Nowak", "G4321", null));
+                context.Workers.Add(workerFactory.CreatePerson("Zuzanna", "Kowalska", "W1234", "zkowalska") as Worker);
+                context.Users.Add(userFactory.CreatePerson("Janusz", "Kowalski", "G1234", "jkoalski") as User);
+                context.Users.Add(userFactory.CreatePerson("Antoni", "Nowak", "G4321", "akowalski") as User);
                 context.SaveChanges();
             }
         }

@@ -1,113 +1,117 @@
-﻿using Library.Domain.Aggregates;
-using Library.Domain.Aggregates.Persons;
+﻿using Abstracts.Repository;
+using Library.Domain.Aggregates;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Library.Domain.Repository
 {
-    public interface IPersonRepository
+    public interface IPersonRepository 
     {
         Task<Person> GetByIdAsync(int id);
-        Task<User> GetGuestByIdAsync(int id);
-        Task<IEnumerable<GuestBook>> GetGuestBookByGuestIdAsync(int id);
-        Task<IEnumerable<Person>> GetAllAsync();
+        Task<Person> GetUserByIdAsync(int id);
 
         Task<IEnumerable<Worker>> GetAllWorkersAsync();
 
         Task<IEnumerable<User>> GetAllUsersAsync();
-        Task AddAsync(Person person);
+        Task AddAsync(User person);
         Task UpdateAsync(Person person);
-        Task UpdateAsync(GuestBook guestBook);
         Task DeleteAsync(int id);
         Task Commit();
     }
 
-    public class PersonRepository : IPersonRepository
+    public class PersonRepository : IRepository<Person>, IPersonRepository
     {
-        private readonly DataContext _context;
+        private readonly IDataContext _context;
 
-        public PersonRepository(DataContext context)
+        public PersonRepository(IDataContext context)
         {
             _context = context;
         }
 
+        public Task<IQueryable<User>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Person> GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task AddAsync(User person)
+        {
+            _context.Users.Add(person);
+        }
+
         public async Task<Person> GetByIdAsync(int id)
         {
-            return await _context.Persons.FindAsync(id);
+            return await _context.Users.FindAsync(id);
         }
 
-        public async Task<User> GetGuestByIdAsync(int id)
+        public async Task<Person> GetUserByIdAsync(int id)
         {
-            return await _context.Guests
-                .Include(g => g.BorrowedBooks)
-                //.ThenInclude(bg => bg.Book)
-                .FirstOrDefaultAsync(g => g.Id == id);
-        }
-
-        public async Task<IEnumerable<Person>> GetAllAsync()
-        {
-            return await _context.Persons.ToListAsync();
-        }
-
-        public async Task<IEnumerable<GuestBook>> GetGuestBookByGuestIdAsync(int id)
-        {
-            return (await _context.Guests.FirstOrDefaultAsync(g => g.Id == id)).BorrowedBooks;
-        }
-
-        public async Task AddAsync(Person person)
-        {
-            await _context.Persons.AddAsync(person);
-            await _context.SaveChangesAsync();
-        }
+            return await _context.Users.Where(p => p.Key == id).FirstOrDefaultAsync();
+        }        
 
         public async Task UpdateAsync(Person person)
         {
             if (person is User guest)
             {
-                _context.Guests.Update(guest);
+                _context.Users.Update(guest);
             }
-            else
+            else if(person is Worker worker)
             {
-                _context.Persons.Update(person);
+                _context.Workers.Update(worker);
             }
-
-            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
             var person = await GetByIdAsync(id);
-            if (person != null)
+
+            if (person == null)
+                return;
+
+            if (person is User guest)
             {
-                _context.Persons.Remove(person);
-                await _context.SaveChangesAsync();
+                _context.Users.Remove(guest);
             }
-        }
-
-        public async Task Commit()
-        {
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateAsync(GuestBook guestBook)
-        {
-            _context.GuestBooks.Update(guestBook);
-            await _context.SaveChangesAsync();
+            else if (person is Worker worker)
+            {
+                _context.Workers.Remove(worker);
+            }
         }
 
         public async Task<IEnumerable<Worker>> GetAllWorkersAsync()
         {
-            var workers = await _context.Set<Worker>().ToListAsync();
+            var workers = await _context.Workers.ToListAsync();
 
             return workers;
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            var users = await _context.Set<User>().ToListAsync();
+            var users = await _context.Users.ToListAsync();
 
             return users;
+        }
+
+        public async Task Commit()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<IQueryable<Person>> IRepository<Person>.GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddAsync(Person entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

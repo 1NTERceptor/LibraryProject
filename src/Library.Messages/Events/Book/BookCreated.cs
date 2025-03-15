@@ -1,7 +1,7 @@
 ﻿using Abstracts.Event_Sourcing;
 using MediatR;
 
-namespace Library.Domain.CQRS.Events.Book
+namespace Library.Messages.Events.Book
 {
     public class BookCreated : IDomainEvent, INotification
     {

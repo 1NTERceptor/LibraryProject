@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Library.Domain.CQRS.Commands
+namespace Library.Messages.Commands
 {
     public class CreateGuestCommand : IRequest<bool>
     {

@@ -1,13 +1,16 @@
-using Abstracts.DDD;
-using Library.Domain.CQRS.Events.Book;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Library.Domain.Aggregates
+namespace Library.Domain.Aggregates.Borrow
 {
-    public class Book : AggregateRoot
+    public class Book 
     {
+        /// <summary>
+        /// Id ksi¹¿ki
+        /// </summary>
+        public int Id { get; set; }
+
         /// <summary>
         /// Tytu³
         /// </summary>
@@ -41,11 +44,6 @@ namespace Library.Domain.Aggregates
         [ForeignKey("PreviousPartOfSeriesId")]
         public Book PreviousPartOfSeries { get; set; }
 
-        /// <summary>
-        /// Czy ksi¹¿ka wypo¿yczona
-        /// </summary>
-        public bool IsBorrowed { get; private set; }
-
         public Book() { }
 
         public Book(string title, string author, DateTime releaseDate, string description, bool isSeries = false)
@@ -55,8 +53,6 @@ namespace Library.Domain.Aggregates
             ReleaseDate = releaseDate;
             Description = description;
             IsSeries = isSeries;
-
-            AddDomainEvent(new BookCreated(Id));
         }
 
         public void MakeSeries(Book previousPartOfSeries)
@@ -64,22 +60,6 @@ namespace Library.Domain.Aggregates
             IsSeries = true;
             PreviousPartOfSeries = previousPartOfSeries;
             PreviousPartOfSeries.IsSeries = true;
-        }
-
-        /// <summary>
-        /// Wypo¿yczenie ksi¹zki
-        /// </summary>
-        /// <returns></returns>
-        public bool Borrow(int guestId)
-        {
-            if (IsBorrowed)
-                return false;
-
-            IsBorrowed = true;
-
-            AddDomainEvent(new BookBorrowed(Id, guestId));
-
-            return true;            
         }
     }
 }

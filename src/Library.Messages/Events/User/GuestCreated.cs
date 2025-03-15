@@ -1,4 +1,6 @@
-﻿namespace Library.Domain.CQRS.Events.Person
+﻿using Library.Messages.Events.Worker;
+
+namespace Library.Messages.Events.User
 {
     public class GuestCreated : PersonCreated
     {

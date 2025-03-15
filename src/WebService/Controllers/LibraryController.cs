@@ -1,9 +1,15 @@
-﻿using Library.Domain.Aggregates;
+﻿using AutoMapper;
+using Library.Domain;
+using Library.Domain.Aggregates.Borrow;
 using Library.Domain.Services;
+using Library.Messages.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO.Pipelines;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebService.Controllers
@@ -14,27 +20,33 @@ namespace WebService.Controllers
     public class LibraryController : ControllerBase
     {
         private readonly ILogger<LibraryController> _logger;
-        private readonly ILibrary _library;        
+        private readonly IDataContext _dataContext;
+        private readonly IMapper _mapper;
+        private readonly IFileReader _fileReader;
 
         public LibraryController(
             ILogger<LibraryController> logger,
-            ILibrary library)
+            IDataContext dataContext,
+            IMapper mapper,
+            IFileReader fileReader)
         {
             _logger = logger;
-            _library = library;
+            _dataContext = dataContext;
+            _mapper = mapper;
+            _fileReader = fileReader;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Book>> GetAll()
+        public async Task<IEnumerable<BookModel>> GetAll()
         {
-            var books = await _library.GetBooks();
-            return books;
+            var books = await _dataContext.Books.ToListAsync();
+            return _mapper.Map<IEnumerable<BookModel>>(books);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var book = await _library.GetById(id);
+            var book = await _dataContext.Books.Where(b => b.Id == id).ToListAsync();
 
             if (book == null)
                 return NotFound();
@@ -45,7 +57,7 @@ namespace WebService.Controllers
         [HttpGet("Title/{title}")]
         public async Task<IActionResult> GetByTitle(string title)
         {
-            var book = await _library.GetByTitle(title);
+            var book = await _dataContext.Books.Where(b => b.Title == title).ToListAsync();
 
             if (book == null)
                 return NotFound();
@@ -56,7 +68,7 @@ namespace WebService.Controllers
         [HttpGet("date/{date}")]
         public async Task<IActionResult> GetByReleaseDate(DateTime date)
         {
-            var book = await _library.GetByDate(date);
+            var book = await _dataContext.Books.Where(b => b.ReleaseDate.Date == date.Date).ToListAsync();
 
             if (book == null)
                 return NotFound();
@@ -65,9 +77,9 @@ namespace WebService.Controllers
         }
 
         [HttpGet("series/{author}")]
-        public IActionResult GetBooksSeries(string author)
+        public async Task<IActionResult> GetBooksSeries(string author)
         {
-            var books = _library.GetBooksSeries(author);
+            var books = await _dataContext.Books.Where(b => b.Author == author).ToListAsync();
 
             if (books == null)
                 return NotFound();
@@ -83,8 +95,7 @@ namespace WebService.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                if (!await _library.AddBook(book))
-                    return Conflict();
+                _dataContext.Books.Add(book);
 
                 return CreatedAtAction(nameof(GetById), new { id = book.Id }, book);
             }
@@ -103,8 +114,7 @@ namespace WebService.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                if (!(await _library.UpdateBook(bookToCorrect)))
-                    return NotFound();
+                _dataContext.Books.Update(bookToCorrect);                  
 
                 return NoContent();
             }
@@ -118,8 +128,12 @@ namespace WebService.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            if (!await _library.Remove(id))
+            var book = await _dataContext.Books.Where(b => b.Id == id).FirstOrDefaultAsync();
+            
+            if(book == null)
                 return NotFound();
+
+            _dataContext.Books.Remove(book);
 
             return NoContent();
         }
@@ -127,7 +141,7 @@ namespace WebService.Controllers
         [HttpGet("import/{filePath}")]
         public async Task<IActionResult> GetBookFromFile(string filePath)
         {
-            var book = await _library.GetFromFile(filePath);
+            var book = _fileReader.GetFromFile(filePath);
 
             if (book == null)
                 return NotFound();

@@ -1,4 +1,4 @@
-﻿namespace Library.Domain.CQRS.Events.Person
+﻿namespace Library.Messages.Events.Worker
 {
     public class WorkerCreated : PersonCreated
     {

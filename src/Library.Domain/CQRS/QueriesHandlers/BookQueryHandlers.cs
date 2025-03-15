@@ -1,25 +1,30 @@
-﻿using Library.Domain.Aggregates;
+﻿using AutoMapper;
+using Library.Domain.Aggregates;
 using Library.Domain.CQRS.Queries;
-using Library.Domain.Services;
+using Library.Messages.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Library.Domain.CQRS.QueriesHandlers
 {
-    public class BookQueryHandlers : IRequestHandler<GetAllBooks, IEnumerable<Book>>
+    public class BookQueryHandlers : IRequestHandler<GetAllBooks, IEnumerable<BookModel>>
     {
-        private readonly ILibrary _library;
+        private readonly IDataContext _dataContext;
+        private readonly IMapper _mapper;
 
-        public BookQueryHandlers(ILibrary library) 
+        public BookQueryHandlers(IDataContext dataCotext, IMapper mapper) 
         {
-            _library = library;
+            _dataContext = dataCotext;
         }
 
-        public async Task<IEnumerable<Book>> Handle(GetAllBooks request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<BookModel>> Handle(GetAllBooks request, CancellationToken cancellationToken)
         {
-            return await _library.GetBooks();
+            var books = await _dataContext.Books.ToListAsync();
+            return _mapper.Map<IEnumerable<BookModel>>(books);
         }
     }
 }

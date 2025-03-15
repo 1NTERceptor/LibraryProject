@@ -1,4 +1,4 @@
-﻿using Library.Domain.CQRS.Events.Person;
+﻿using Library.Messages.Events.Worker;
 
 namespace Library.Domain.Aggregates
 {
@@ -16,7 +16,7 @@ namespace Library.Domain.Aggregates
         private Worker(string firstName, string lastName, string employeeCardNumber, string login) : base(firstName, lastName, login)
         {
             EmployeeCardNumber = employeeCardNumber;
-            AddDomainEvent(new WorkerCreated(Id, firstName, lastName));
+            AddDomainEvent(new WorkerCreated(Key, firstName, lastName));
         }
     }
 }

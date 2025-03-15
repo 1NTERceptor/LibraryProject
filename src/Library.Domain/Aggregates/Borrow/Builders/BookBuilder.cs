@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Library.Domain.Aggregates.Builders
+namespace Library.Domain.Aggregates.Borrow.Builders
 {
     public class BookBuilder
     {

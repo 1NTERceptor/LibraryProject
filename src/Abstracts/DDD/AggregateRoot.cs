@@ -6,7 +6,8 @@ namespace Abstracts.DDD
 {
     public abstract class AggregateRoot
     {
-        public int Id { get; protected set; }
+        public int Key { get; protected set; }
+
         private readonly List<IDomainEvent> DomainEvents = new List<IDomainEvent>();
 
         protected void AddDomainEvent(IDomainEvent eventItem)

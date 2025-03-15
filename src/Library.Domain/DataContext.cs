@@ -1,50 +1,70 @@
-﻿using Library.Domain.Aggregates;
-using Library.Domain.Aggregates.Persons;
+﻿using Abstracts.Repository;
+using Library.Domain.Aggregates;
+using Library.Domain.Aggregates.Borrow;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Domain
 {
-    public class DataContext : DbContext
+    public interface IDataContext
+    {
+        public DbSet<Worker> Workers { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Borrow> Borrows { get; set; }
+    }
+
+    public class DataContext : DbContext, IDataContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
 
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<Worker> Workers { get; set; }
 
-        public DbSet<User> Guests { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DbSet<Book> Books { get; set; }
 
-        public DbSet<GuestBook> GuestBooks { get; set; }
+        public DbSet<Borrow> Borrows { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Ustawienie klucza głównego dla Person w kontekście Worker i User
+            modelBuilder.Entity<Person>()
+                .HasKey(p => p.Key);  // Person ma klucz główny w klasach dziedziczących
+
+            // Konfiguracja dziedziczenia
+            modelBuilder.Entity<Person>()
+                .HasDiscriminator<string>("PersonType")
+                .HasValue<User>("User")
+                .HasValue<Worker>("Worker");
+
             modelBuilder.Entity<Book>()
                 .Property(b => b.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Person>()
-                .Property(p => p.Id)
+            modelBuilder.Entity<Borrow>()
+                .Property(b => b.Key)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Person>()
-                .HasDiscriminator<string>("PersonType")
-                .HasValue<User>("Guest")
-                .HasValue<Worker>("Worker");
+            modelBuilder.Entity<Borrow>(borrow =>
+            {
+                borrow.HasKey(b => b.Key);
 
-            modelBuilder.Entity<GuestBook>()
-            .HasKey(gb => new { gb.GuestId, gb.BookId }); // Klucz złożony
+                // Relacja do Guest
+                borrow.HasOne<Person>()
+                    .WithMany()
+                    .HasForeignKey(b => b.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<GuestBook>()
-            //    .HasOne(gb => gb.Guest)
-            //    .WithMany(g => g.BorrowedBooks)
-            //    .HasForeignKey(gb => gb.GuestId);
-
-            //modelBuilder.Entity<GuestBook>()
-            //    .HasOne(gb => gb.Book)
-            //    .WithMany()
-            //    .HasForeignKey(gb => gb.BookId);
+                // Relacja do Book
+                borrow.HasOne<Borrow>()
+                    .WithMany()
+                    .HasForeignKey(b => b.BookId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
         }
     }
 }
