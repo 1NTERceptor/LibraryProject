@@ -76,7 +76,7 @@ namespace WebService.Controllers
             return Ok(book);
         }
 
-        [HttpGet("series/{author}")]
+        [HttpGet("author/{author}")]
         public async Task<IActionResult> GetBooksSeries(string author)
         {
             var books = await _dataContext.Books.Where(b => b.Author == author).ToListAsync();
@@ -96,6 +96,7 @@ namespace WebService.Controllers
                     return BadRequest(ModelState);
 
                 _dataContext.Books.Add(book);
+                await _dataContext.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetById), new { id = book.Id }, book);
             }
@@ -114,7 +115,8 @@ namespace WebService.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                _dataContext.Books.Update(bookToCorrect);                  
+                _dataContext.Books.Update(bookToCorrect);
+                await _dataContext.SaveChangesAsync();
 
                 return NoContent();
             }
@@ -134,6 +136,7 @@ namespace WebService.Controllers
                 return NotFound();
 
             _dataContext.Books.Remove(book);
+            await _dataContext.SaveChangesAsync();
 
             return NoContent();
         }

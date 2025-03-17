@@ -1,9 +1,8 @@
-﻿using Abstracts.Repository;
-using Library.Domain.Aggregates;
+﻿using Library.Domain.Aggregates;
 using Library.Domain.Aggregates.Borrow;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Library.Domain
 {
@@ -13,6 +12,7 @@ namespace Library.Domain
         public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Borrow> Borrows { get; set; }
+        public Task SaveChangesAsync();
     }
 
     public class DataContext : DbContext, IDataContext
@@ -28,6 +28,11 @@ namespace Library.Domain
         public DbSet<Book> Books { get; set; }
 
         public DbSet<Borrow> Borrows { get; set; }
+
+        public async Task SaveChangesAsync()
+        {
+            await base.SaveChangesAsync();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

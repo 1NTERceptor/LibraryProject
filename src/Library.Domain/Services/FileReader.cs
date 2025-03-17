@@ -52,6 +52,7 @@ namespace Library.Domain.Services
                             .Build();
 
                         await _context.Books.AddAsync(book);
+                        await _context.SaveChangesAsync();
                         books.Add(book);
                     }
                 }
