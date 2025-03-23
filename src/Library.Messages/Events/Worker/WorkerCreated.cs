@@ -2,7 +2,7 @@
 {
     public class WorkerCreated : PersonCreated
     {
-        public WorkerCreated(int personId, string firstName, string lastName) : base(personId, firstName, lastName)
+        public WorkerCreated(Guid personId, string firstName, string lastName) : base(personId, firstName, lastName)
         {
         }
     }

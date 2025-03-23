@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Library.Domain;
-using Library.Domain.Aggregates.Borrow;
+using Library.Domain.Aggregates.Loan;
 using Library.Domain.Services;
 using Library.Messages.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.IO.Pipelines;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,15 +16,15 @@ namespace WebService.Controllers
     [Route("api/v1/[Area]")]
     [Area("books")]
     [ApiController]
-    public class LibraryController : ControllerBase
+    public class BooksController : ControllerBase
     {
-        private readonly ILogger<LibraryController> _logger;
+        private readonly ILogger<BooksController> _logger;
         private readonly IDataContext _dataContext;
         private readonly IMapper _mapper;
         private readonly IFileReader _fileReader;
 
-        public LibraryController(
-            ILogger<LibraryController> logger,
+        public BooksController(
+            ILogger<BooksController> logger,
             IDataContext dataContext,
             IMapper mapper,
             IFileReader fileReader)
@@ -44,7 +43,7 @@ namespace WebService.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var book = await _dataContext.Books.Where(b => b.Id == id).ToListAsync();
 
@@ -128,7 +127,7 @@ namespace WebService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var book = await _dataContext.Books.Where(b => b.Id == id).FirstOrDefaultAsync();
             

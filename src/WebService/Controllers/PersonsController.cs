@@ -1,15 +1,11 @@
-﻿using Library.Domain.Aggregates;
-using Library.Domain.CQRS.Queries;
-using Library.Domain.Repository;
+﻿using Library.Domain.CQRS.Queries;
 using Library.Messages.Commands;
 using Library.Messages.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebService.Controllers;
 
 namespace REST_API.Controllers
 {
@@ -18,15 +14,11 @@ namespace REST_API.Controllers
     [ApiController]
     public class PersonsController : ControllerBase
     {
-        private readonly ILogger<LibraryController> _logger;
         private readonly IMediator _mediator;
-        private readonly IPersonRepository _personRepository;
 
-        public PersonsController(ILogger<LibraryController> logger, IMediator mediator, IPersonRepository personRepository)
+        public PersonsController(IMediator mediator)        
         {
-            _logger = logger;
             _mediator = mediator;
-            _personRepository = personRepository;
         }
 
         [HttpGet("workers")]

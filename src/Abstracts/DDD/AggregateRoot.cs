@@ -1,4 +1,5 @@
 ﻿using Abstracts.Event_Sourcing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace Abstracts.DDD
 {
     public abstract class AggregateRoot
     {
-        public int Key { get; protected set; }
+        public Guid Key { get; protected set; }
 
         private readonly List<IDomainEvent> DomainEvents = new List<IDomainEvent>();
 

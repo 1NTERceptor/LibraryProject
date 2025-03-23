@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Library.Domain.Aggregates;
-using Library.Domain.Aggregates.Borrow;
+using Library.Domain.Aggregates.Loan;
 using Library.Messages.Models;
 
 namespace Library.Domain

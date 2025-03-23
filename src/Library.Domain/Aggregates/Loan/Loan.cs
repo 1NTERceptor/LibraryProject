@@ -1,19 +1,23 @@
 ﻿using Abstracts.DDD;
 using System;
 
-namespace Library.Domain.Aggregates.Borrow
+namespace Library.Domain.Aggregates.Loan
 {
-    public class Borrow : AggregateRoot
+    public class Loan : AggregateRoot
     {
         /// <summary>
-        /// Id wypożyczenia
+        /// Wypożyczona książka
         /// </summary>
-        public int BookId { get; protected set; }
+        public Book Book { get; protected set; }
+
+        public Guid BookId { get; protected set; }
 
         /// <summary>
-        /// Id użytkownika
+        /// Wypożyczający użytkownik
         /// </summary>
-        public int UserId { get; protected set; }
+        public User User { get; protected set; }
+
+        public Guid UserId { get; protected set; }
 
         /// <summary>
         /// Data początku wypożyczenia
@@ -24,9 +28,11 @@ namespace Library.Domain.Aggregates.Borrow
         /// Data końca wypożyczenia
         /// </summary>
         public DateTime DateTo { get; protected set; }
+        
 
-        public Borrow(int bookId, int userId, DateTime dateFrom, DateTime dateTo)
+        public Loan(Guid bookId, Guid userId, DateTime dateFrom, DateTime dateTo) 
         {
+            Key = Guid.NewGuid();
             BookId = bookId;
             UserId = userId;
             DateFrom = dateFrom;

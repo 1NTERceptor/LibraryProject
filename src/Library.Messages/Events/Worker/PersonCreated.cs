@@ -5,11 +5,11 @@ namespace Library.Messages.Events.Worker
 {
     public class PersonCreated : IDomainEvent, INotification
     {
-        public int PersonId { get; }
+        public Guid PersonId { get; }
         public string FirstName { get; }
         public string LastName { get; }
 
-        public PersonCreated(int personId, string firstName, string lastName)
+        public PersonCreated(Guid personId, string firstName, string lastName)
         {
             PersonId = personId;
             FirstName = firstName;

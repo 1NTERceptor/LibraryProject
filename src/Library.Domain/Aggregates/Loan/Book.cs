@@ -2,14 +2,14 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Library.Domain.Aggregates.Borrow
+namespace Library.Domain.Aggregates.Loan
 {
     public class Book 
     {
         /// <summary>
         /// Id ksi¹¿ki
         /// </summary>
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Tytu³

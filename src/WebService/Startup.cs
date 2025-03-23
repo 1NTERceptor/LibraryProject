@@ -1,7 +1,6 @@
-using AutoMapper;
 using Library.Domain;
 using Library.Domain.Aggregates;
-using Library.Domain.Aggregates.Borrow.Builders;
+using Library.Domain.Aggregates.Loan.Builders;
 using Library.Domain.CommandsHandlers;
 using Library.Domain.Repository;
 using Library.Domain.Services;
@@ -48,8 +47,9 @@ namespace WebService
             services.AddScoped<IDataContext, DataContext>();
             services.AddScoped<IFileReader, FileReader>();
             services.AddAutoMapper(typeof(LibraryMapper));
-            services.AddScoped<IBorrowRepository, BorrowRepository>();
-            services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<ILoanRepository, LoanRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IWorkerRepository, WorkerRepository>();
 
 
             // Dodaj CORS

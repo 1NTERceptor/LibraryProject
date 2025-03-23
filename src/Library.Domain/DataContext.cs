@@ -1,8 +1,7 @@
 ﻿using Library.Domain.Aggregates;
-using Library.Domain.Aggregates.Borrow;
+using Library.Domain.Aggregates.Loan;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using System.Threading;
 
 namespace Library.Domain
 {
@@ -11,11 +10,11 @@ namespace Library.Domain
         public DbSet<Worker> Workers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
-        public DbSet<Borrow> Borrows { get; set; }
+        public DbSet<Loan> Loans { get; set; }
         public Task SaveChangesAsync();
     }
 
-    public class DataContext : DbContext, IDataContext
+    public class DataContext : DbContext, IDataContext, Abstracts.Repository.IDataContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -27,7 +26,7 @@ namespace Library.Domain
 
         public DbSet<Book> Books { get; set; }
 
-        public DbSet<Borrow> Borrows { get; set; }
+        public DbSet<Loan> Loans { get; set; }
 
         public async Task SaveChangesAsync()
         {
@@ -50,11 +49,11 @@ namespace Library.Domain
                 .Property(b => b.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Borrow>()
+            modelBuilder.Entity<Loan>()
                 .Property(b => b.Key)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Borrow>(borrow =>
+            modelBuilder.Entity<Loan>(borrow =>
             {
                 borrow.HasKey(b => b.Key);
 
@@ -65,7 +64,7 @@ namespace Library.Domain
                     .OnDelete(DeleteBehavior.Restrict);
 
                 // Relacja do Book
-                borrow.HasOne<Borrow>()
+                borrow.HasOne<Loan>()
                     .WithMany()
                     .HasForeignKey(b => b.BookId)
                     .OnDelete(DeleteBehavior.Restrict);

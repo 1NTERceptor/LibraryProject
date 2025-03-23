@@ -14,24 +14,26 @@ namespace REST_API.QueriesHandlers
         IRequestHandler<GetAllWorkers, IEnumerable<WorkerModel>>,
         IRequestHandler<GetAllUsers, IEnumerable<UserModel>>
     {
-        private readonly IPersonRepository _personRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IWorkerRepository _workerRepository;
         private readonly IMapper _mapper;
 
-        public PeopleQueryHandlers(IPersonRepository personRepository, IMapper mapper) 
+        public PeopleQueryHandlers(IUserRepository userRepository, IWorkerRepository workerRepository, IMapper mapper) 
         {
-            _personRepository = personRepository;
+            _userRepository = userRepository;
+            _workerRepository = workerRepository;
             _mapper = mapper;
         }
 
         public async Task<IEnumerable<WorkerModel>> Handle(GetAllWorkers request, CancellationToken cancellationToken)
         {
-            var workers = await _personRepository.GetAllWorkersAsync();
+            var workers = await _workerRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<WorkerModel>>(workers);
         }
 
         public async Task<IEnumerable<UserModel>> Handle(GetAllUsers request, CancellationToken cancellationToken)
         {
-            var users = await _personRepository.GetAllUsersAsync();
+            var users = await _userRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<UserModel>>(users);
         }
     }

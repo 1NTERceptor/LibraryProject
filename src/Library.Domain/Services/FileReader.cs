@@ -1,5 +1,5 @@
-﻿using Library.Domain.Aggregates.Borrow;
-using Library.Domain.Aggregates.Borrow.Builders;
+﻿using Library.Domain.Aggregates.Loan;
+using Library.Domain.Aggregates.Loan.Builders;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -11,18 +11,18 @@ namespace Library.Domain.CommandsHandlers
     public class PeopleCommandsHandlers :
         IRequestHandler<CreateGuestCommand, bool>
     {
-        private readonly IPersonRepository _personRepository;
+        private readonly IUserRepository _userRepository;
 
-        public PeopleCommandsHandlers(IPersonRepository peopleRepository)
+        public PeopleCommandsHandlers(IUserRepository peopleRepository)
         {
-            _personRepository = peopleRepository;
+            _userRepository = peopleRepository;
         }
 
         public async Task<bool> Handle(CreateGuestCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                await _personRepository.AddAsync(User.CreateUser(request.FirstName, request.LastName, request.GuestCardNumber, null));
+                await _userRepository.AddAsync(User.CreateUser(request.FirstName, request.LastName, request.GuestCardNumber, null));
             }
             catch(Exception ex)
             {
