@@ -1,6 +1,6 @@
 ﻿using Library.Domain.Aggregates;
 using Library.Domain.Repository;
-using Library.Messages.Commands;
+using Library.Messages.Commands.Persons;
 using MediatR;
 using System;
 using System.Threading;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Library.Domain.CommandsHandlers
 {
     public class PeopleCommandsHandlers :
-        IRequestHandler<CreateGuestCommand, bool>
+        IRequestHandler<CreateUserCommand, bool>
     {
         private readonly IUserRepository _userRepository;
 
@@ -18,11 +18,12 @@ namespace Library.Domain.CommandsHandlers
             _userRepository = peopleRepository;
         }
 
-        public async Task<bool> Handle(CreateGuestCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 await _userRepository.AddAsync(User.CreateUser(request.FirstName, request.LastName, request.GuestCardNumber, null));
+                await _userRepository.Commit();
             }
             catch(Exception ex)
             {

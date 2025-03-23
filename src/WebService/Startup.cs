@@ -2,6 +2,7 @@ using Library.Domain;
 using Library.Domain.Aggregates;
 using Library.Domain.Aggregates.Loan.Builders;
 using Library.Domain.CommandsHandlers;
+using Library.Domain.CQRS.CommandsHandlers;
 using Library.Domain.Repository;
 using Library.Domain.Services;
 using Microsoft.AspNetCore.Builder;
@@ -40,7 +41,6 @@ namespace WebService
 
             services.AddMediatR(cfg =>
             {
-                cfg.RegisterServicesFromAssembly(typeof(Startup).Assembly);
                 cfg.RegisterServicesFromAssembly(typeof(PeopleCommandsHandlers).Assembly);
             });
 

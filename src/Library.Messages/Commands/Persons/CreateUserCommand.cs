@@ -1,14 +1,14 @@
 ﻿using MediatR;
 
-namespace Library.Messages.Commands
+namespace Library.Messages.Commands.Persons
 {
-    public class CreateGuestCommand : IRequest<bool>
+    public class CreateUserCommand : IRequest<bool>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string GuestCardNumber { get; set; }
 
-        public CreateGuestCommand(string firstName, string lastName, string guestCardNumber)
+        public CreateUserCommand(string firstName, string lastName, string guestCardNumber)
         {
             FirstName = firstName;
             LastName = lastName;

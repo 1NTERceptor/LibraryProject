@@ -48,6 +48,7 @@ namespace Library.Domain.Aggregates.Loan
 
         public Book(string title, string author, DateTime releaseDate, string description, bool isSeries = false)
         {
+            Id = Guid.NewGuid();
             Title = title;
             Author = author;
             ReleaseDate = releaseDate;

@@ -12,6 +12,7 @@ namespace Library.Domain
             CreateMap<Worker, WorkerModel>();
             CreateMap<Book, BookModel>();
             CreateMap<User, UserModel>();
+            CreateMap<Loan, LoanModel>();
         }
     }
 }

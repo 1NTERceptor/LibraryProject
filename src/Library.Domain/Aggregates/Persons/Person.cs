@@ -1,4 +1,5 @@
 ﻿using Abstracts.DDD;
+using System;
 
 namespace Library.Domain.Aggregates
 {
@@ -13,6 +14,7 @@ namespace Library.Domain.Aggregates
         public Person() { }
         public Person(string firstName, string lastName, string login)
         {
+            Key = Guid.NewGuid();
             FirstName = firstName;
             LastName = lastName;
             Login = login;

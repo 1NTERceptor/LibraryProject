@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Library.Domain.Aggregates;
-using Library.Domain.CQRS.Queries;
 using Library.Messages.Models;
+using Library.Messages.Queries.Books;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Library.Domain.CQRS.QueriesHandlers
 {
-    public class BookQueryHandlers : IRequestHandler<GetAllBooks, IEnumerable<BookModel>>
+    public class BookQuerieHandlers : IRequestHandler<GetAllBooks, IEnumerable<BookModel>>
     {
         private readonly IDataContext _dataContext;
         private readonly IMapper _mapper;
 
-        public BookQueryHandlers(IDataContext dataCotext, IMapper mapper) 
+        public BookQuerieHandlers(IDataContext dataCotext, IMapper mapper) 
         {
             _dataContext = dataCotext;
         }

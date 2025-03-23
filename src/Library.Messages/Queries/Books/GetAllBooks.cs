@@ -1,7 +1,7 @@
 ﻿using Library.Messages.Models;
 using MediatR;
 
-namespace Library.Domain.CQRS.Queries
+namespace Library.Messages.Queries.Books
 {
     public class GetAllBooks : IRequest<IEnumerable<BookModel>>
     {

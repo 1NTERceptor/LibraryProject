@@ -1,6 +1,6 @@
-﻿using Library.Domain.CQRS.Queries;
-using Library.Messages.Commands;
+﻿using Library.Messages.Commands.Persons;
 using Library.Messages.Models;
+using Library.Messages.Queries.Persons;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,9 +34,9 @@ namespace REST_API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] CreateGuestRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
         {
-            var command = new CreateGuestCommand(request.FirstName, request.LastName, request.GuestCardNumber);
+            var command = new CreateUserCommand(request.FirstName, request.LastName, request.GuestCardNumber);
 
             return Ok(await _mediator.Send(command));
         }

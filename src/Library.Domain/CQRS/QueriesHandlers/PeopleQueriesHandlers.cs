@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Library.Domain.Aggregates;
-using Library.Domain.CQRS.Queries;
 using Library.Domain.Repository;
 using Library.Messages.Models;
+using Library.Messages.Queries.Persons;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace REST_API.QueriesHandlers
 {
-    public class PeopleQueryHandlers : 
+    public class PeopleQueriesHandlers : 
         IRequestHandler<GetAllWorkers, IEnumerable<WorkerModel>>,
         IRequestHandler<GetAllUsers, IEnumerable<UserModel>>
     {
@@ -18,7 +18,7 @@ namespace REST_API.QueriesHandlers
         private readonly IWorkerRepository _workerRepository;
         private readonly IMapper _mapper;
 
-        public PeopleQueryHandlers(IUserRepository userRepository, IWorkerRepository workerRepository, IMapper mapper) 
+        public PeopleQueriesHandlers(IUserRepository userRepository, IWorkerRepository workerRepository, IMapper mapper) 
         {
             _userRepository = userRepository;
             _workerRepository = workerRepository;

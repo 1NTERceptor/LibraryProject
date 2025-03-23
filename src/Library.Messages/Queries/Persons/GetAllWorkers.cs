@@ -1,7 +1,7 @@
 ﻿using Library.Messages.Models;
 using MediatR;
 
-namespace Library.Domain.CQRS.Queries
+namespace Library.Messages.Queries.Persons
 {
     public class GetAllWorkers : IRequest<IEnumerable<WorkerModel>>
     {

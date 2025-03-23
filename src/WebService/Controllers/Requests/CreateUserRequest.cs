@@ -2,7 +2,7 @@
 
 namespace REST_API.Controllers
 {
-    public class CreateGuestRequest
+    public class CreateUserRequest
     {
         [Required]
         public string FirstName { get; set; }
