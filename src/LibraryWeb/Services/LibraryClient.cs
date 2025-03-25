@@ -29,5 +29,10 @@ namespace BlazorApp.Services
         {
             return await _httpClient.GetFromJsonAsync<List<UserModel>>("api/v1/persons/users");
         }
+
+        public async Task<List<LoanModel>> GetLoansAsync()
+        {
+            return await _httpClient.GetFromJsonAsync<List<LoanModel>>("api/v1/Loans");
+        }
     }
 }

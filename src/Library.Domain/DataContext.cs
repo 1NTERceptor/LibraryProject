@@ -1,11 +1,12 @@
-﻿using Library.Domain.Aggregates;
+﻿using Abstracts.Repository;
+using Library.Domain.Aggregates;
 using Library.Domain.Aggregates.Loan;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Library.Domain
 {
-    public interface IDataContext
+    public interface IDataContext : IDataContextBase
     {
         public DbSet<Worker> Workers { get; set; }
         public DbSet<User> Users { get; set; }
@@ -14,7 +15,7 @@ namespace Library.Domain
         public Task SaveChangesAsync();
     }
 
-    public class DataContext : DbContext, IDataContext, Abstracts.Repository.IDataContext
+    public class DataContext : DbContext, IDataContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -35,39 +36,25 @@ namespace Library.Domain
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Ustawienie klucza głównego dla Person w kontekście Worker i User
-            modelBuilder.Entity<Person>()
-                .HasKey(p => p.Key);  // Person ma klucz główny w klasach dziedziczących
+            modelBuilder.Entity<User>()
+            .HasKey(p => p.Key);  
 
-            // Konfiguracja dziedziczenia
-            modelBuilder.Entity<Person>()
-                .HasDiscriminator<string>("PersonType")
-                .HasValue<User>("User")
-                .HasValue<Worker>("Worker");
+            modelBuilder.Entity<Worker>()
+            .HasKey(p => p.Key);
 
             modelBuilder.Entity<Book>()
-                .Property(b => b.Id)
-                .ValueGeneratedOnAdd();
+            .HasKey(b => b.Id);
 
-            modelBuilder.Entity<Loan>()
-                .Property(b => b.Key)
-                .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<Loan>(borrow =>
+            modelBuilder.Entity<Loan>(l =>
             {
-                borrow.HasKey(b => b.Key);
+                l.HasKey(b => b.Key);
 
-                // Relacja do Guest
-                borrow.HasOne<Person>()
-                    .WithMany()
-                    .HasForeignKey(b => b.UserId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                l.HasOne(l => l.User)
+                .WithMany(u => u.Loans)
+                .HasForeignKey(u => u.UserId);
 
-                // Relacja do Book
-                borrow.HasOne<Loan>()
-                    .WithMany()
-                    .HasForeignKey(b => b.BookId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                l.HasOne(l => l.Book)
+                .WithOne(b => b.Loan);
             });
         }
     }

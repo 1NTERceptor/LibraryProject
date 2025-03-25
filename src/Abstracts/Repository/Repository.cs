@@ -16,9 +16,9 @@ namespace Abstracts.Repository
 
     public class Repository<T> : IRepository<T> where T : AggregateRoot
     {
-        protected readonly IDataContext _context;
+        protected readonly IDataContextBase _context;
 
-        public Repository(IDataContext context)
+        public Repository(IDataContextBase context)
         {
             _context = context;
         }

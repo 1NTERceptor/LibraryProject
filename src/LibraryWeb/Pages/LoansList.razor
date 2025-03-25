@@ -1,0 +1,46 @@
+﻿@page "/loanslist"
+@using BlazorApp.Services
+@using Library.Messages.Models
+@inject LibraryClient LibraryClient
+
+<h1>Spis wypożyczeń</h1>
+
+<p>Aktualnie wypożyczone książki:</p>
+
+@if (loans == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id książki</th>
+                <th>Id użytkownika</th>
+                <th>Data początku wypożyczenia</th>
+                <th>Data końca wypożyczenia</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in loans)
+            {
+                <tr>
+                    <td>@user.BookId</td>
+                    <td>@user.UserId</td>
+                    <td>@user.DateFrom</td>
+                    <td>@user.DateTo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<LoanModel> loans;
+
+    protected override async Task OnInitializedAsync()
+    {
+        loans = await LibraryClient.GetLoansAsync();
+    }
+ }

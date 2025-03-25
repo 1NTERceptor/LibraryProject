@@ -27,8 +27,7 @@ namespace Library.Domain.Aggregates.Loan
         /// <summary>
         /// Data końca wypożyczenia
         /// </summary>
-        public DateTime DateTo { get; protected set; }
-        
+        public DateTime DateTo { get; protected set; }        
 
         public Loan(Guid bookId, Guid userId, DateTime dateFrom, DateTime dateTo) 
         {

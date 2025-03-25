@@ -1,4 +1,7 @@
 ﻿using Library.Messages.Events.User;
+using System;
+using System.Collections.Generic;
+using Library.Domain.Aggregates.Loan;
 
 namespace Library.Domain.Aggregates
 {
@@ -7,6 +10,10 @@ namespace Library.Domain.Aggregates
         public string GuestCardNumber { get; private set; }
 
         public string City { get; private set; }
+
+        public List<Library.Domain.Aggregates.Loan.Loan> Loans { get; private set; } = new List<Library.Domain.Aggregates.Loan.Loan>();
+
+        public Guid LoanId { get; set; }
 
         public static User CreateUser(string firstName, string lastName, string guestCardNumber, string login)
         {
