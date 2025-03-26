@@ -1,16 +1,12 @@
+using Abstracts.DDD;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Library.Domain.Aggregates.Loan
+namespace Library.Domain.Aggregates
 {
-    public class Book 
+    public class Book : AggregateRoot
     {
-        /// <summary>
-        /// Id ksi¹¿ki
-        /// </summary>
-        public Guid Id { get; private set; }
-
         /// <summary>
         /// Tytu³
         /// </summary>
@@ -41,7 +37,6 @@ namespace Library.Domain.Aggregates.Loan
         /// <summary>
         /// Poprzednia czêœæ ksi¹¿ki
         /// </summary>
-        [ForeignKey("PreviousPartOfSeriesId")]
         public Book PreviousPartOfSeries { get; private set; }
 
         /// <summary>
@@ -49,13 +44,10 @@ namespace Library.Domain.Aggregates.Loan
         /// </summary>
         public Loan Loan { get; private set; }
 
-        public Guid LoanId { get; private set; }
-
         public Book() { }
 
         public Book(string title, string author, DateTime releaseDate, string description, bool isSeries = false)
         {
-            Id = Guid.NewGuid();
             Title = title;
             Author = author;
             ReleaseDate = releaseDate;

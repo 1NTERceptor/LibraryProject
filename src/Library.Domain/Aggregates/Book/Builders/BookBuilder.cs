@@ -1,7 +1,6 @@
-﻿using Library.Domain.Aggregates.Loan;
-using System;
+﻿using System;
 
-namespace Library.Domain.Aggregates.Loan.Builders
+namespace Library.Domain.Aggregates.BookBuilder
 {
     public class BookBuilder
     {

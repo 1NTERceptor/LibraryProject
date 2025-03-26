@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Library.Domain.Aggregates;
-using Library.Domain.Aggregates.Loan;
 using Library.Messages.Models;
 
 namespace Library.Domain

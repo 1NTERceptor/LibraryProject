@@ -1,4 +1,4 @@
-﻿using Library.Domain.Aggregates.Loan;
+﻿using Library.Domain.Aggregates;
 using Library.Domain.Repository;
 using Library.Messages.Commands.Loans;
 using MediatR;

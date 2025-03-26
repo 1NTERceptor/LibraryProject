@@ -1,7 +1,7 @@
 ﻿using Abstracts.DDD;
 using System;
 
-namespace Library.Domain.Aggregates.Loan
+namespace Library.Domain.Aggregates
 {
     public class Loan : AggregateRoot
     {
@@ -31,7 +31,6 @@ namespace Library.Domain.Aggregates.Loan
 
         public Loan(Guid bookId, Guid userId, DateTime dateFrom, DateTime dateTo) 
         {
-            Key = Guid.NewGuid();
             BookId = bookId;
             UserId = userId;
             DateFrom = dateFrom;

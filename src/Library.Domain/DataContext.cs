@@ -1,6 +1,5 @@
 ﻿using Abstracts.Repository;
 using Library.Domain.Aggregates;
-using Library.Domain.Aggregates.Loan;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -43,18 +42,19 @@ namespace Library.Domain
             .HasKey(p => p.Key);
 
             modelBuilder.Entity<Book>()
-            .HasKey(b => b.Id);
+            .HasKey(b => b.Key);
 
             modelBuilder.Entity<Loan>(l =>
             {
                 l.HasKey(b => b.Key);
 
                 l.HasOne(l => l.User)
-                .WithMany(u => u.Loans)
-                .HasForeignKey(u => u.UserId);
+                 .WithMany(u => u.Loans)
+                 .HasForeignKey(l => l.UserId);
 
                 l.HasOne(l => l.Book)
-                .WithOne(b => b.Loan);
+                 .WithOne(b => b.Loan)
+                 .HasForeignKey<Loan>(l => l.BookId);
             });
         }
     }

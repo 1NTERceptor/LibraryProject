@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Library.Domain;
-using Library.Domain.Aggregates.Loan;
+using Library.Domain.Aggregates;
 using Library.Domain.Services;
 using Library.Messages.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +45,7 @@ namespace WebService.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var book = await _dataContext.Books.Where(b => b.Id == id).ToListAsync();
+            var book = await _dataContext.Books.Where(b => b.Key == id).ToListAsync();
 
             if (book == null)
                 return NotFound();
@@ -97,7 +97,7 @@ namespace WebService.Controllers
                 _dataContext.Books.Add(book);
                 await _dataContext.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(GetById), new { id = book.Id }, book);
+                return CreatedAtAction(nameof(GetById), new { id = book.Key }, book);
             }
             catch(Exception ex)
             {
@@ -129,7 +129,7 @@ namespace WebService.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var book = await _dataContext.Books.Where(b => b.Id == id).FirstOrDefaultAsync();
+            var book = await _dataContext.Books.Where(b => b.Key == id).FirstOrDefaultAsync();
             
             if(book == null)
                 return NotFound();

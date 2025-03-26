@@ -11,6 +11,11 @@ namespace Abstracts.DDD
 
         private readonly List<IDomainEvent> DomainEvents = new List<IDomainEvent>();
 
+        public AggregateRoot()
+        {
+            Key = Guid.NewGuid();
+        }
+
         protected void AddDomainEvent(IDomainEvent eventItem)
         {
             DomainEvents.Add(eventItem);
