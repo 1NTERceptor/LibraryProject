@@ -1,6 +1,4 @@
 using Library.Domain;
-using Library.Domain.Aggregates;
-using Library.Domain.Aggregates.BookBuilder;
 using Library.Domain.CommandsHandlers;
 using Library.Domain.Repository;
 using Library.Domain.Services;
@@ -11,9 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Linq;
-using static Library.Domain.Aggregates.PersonFactory;
 
 namespace WebService
 {
@@ -85,61 +80,6 @@ namespace WebService
             {
                 endpoints.MapControllers();
             });
-
-            AddFirstBooks(app.ApplicationServices);
-            AddFirstPersons(app.ApplicationServices);
-        }
-
-        private void AddFirstBooks(IServiceProvider serviceProvider)
-        {
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-
-                context.AddAsync(BookBuilder.Given()
-                    .SetTitle("Harry Potter i kamieñ Filozoficzny")
-                    .SetAuthor("J.K. Rowling")
-                    .SetReleaseDate(DateTime.Parse("26.06.1997"))
-                    .SetDescription("Opowieœæ o m³odym czarodzieju")
-                    .Build()
-                );
-                context.SaveChanges();
-                context.Books.Add(BookBuilder.Given()
-                    .SetTitle("Lalka")
-                    .SetAuthor("Boles³aw Prus")
-                    .SetReleaseDate(DateTime.Parse("9.02.1887 "))
-                    .SetDescription("Powieœæ spo³eczno-obyczajowa której g³ównym bohaterem jest Stanis³aw Wokulski")
-                    .Build()
-                );
-                context.SaveChanges();
-                context.Books.Add(BookBuilder.Given()
-                    .SetTitle("Harry Potter i komnata tajemnic")
-                    .SetAuthor("J.K. Rowling")
-                    .SetReleaseDate(DateTime.Parse("26.06.1998"))
-                    .SetDescription("Kolejna czêœæ opowieœci o m³odym czarodzieju")
-                    .SetPreviousBookPart(context.Books.Where(b => b.Title == "Harry Potter i kamieñ Filozoficzny").FirstOrDefault())
-                    .Build()
-                );
-                context.SaveChanges();
-            }
-        }
-
-        private void AddFirstPersons(IServiceProvider serviceProvider)
-        {
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-
-                PersonCreatorDelegate guestCreator = User.CreateUser;
-                var userFactory = new PersonFactory(guestCreator);
-                PersonCreatorDelegate workerCreator = Worker.CreateWorker;
-                var workerFactory = new PersonFactory(workerCreator);
-
-                context.Workers.Add(workerFactory.CreatePerson("Zuzanna", "Kowalska", "W1234", "zkowalska") as Worker);
-                context.Users.Add(userFactory.CreatePerson("Janusz", "Kowalski", "G1234", "jkoalski") as User);
-                context.Users.Add(userFactory.CreatePerson("Antoni", "Nowak", "G4321", "akowalski") as User);
-                context.SaveChanges();
-            }
         }
     }
 }

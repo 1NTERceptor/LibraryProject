@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Library.Domain;
 using Library.Domain.Aggregates;
+using Library.Domain.Aggregates.BookBuilder;
 using Library.Domain.Services;
 using Library.Messages.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,37 @@ namespace WebService.Controllers
             _dataContext = dataContext;
             _mapper = mapper;
             _fileReader = fileReader;
+        }
+
+        [HttpGet("populate")]
+        public async Task<IEnumerable<BookModel>> PopulateBooks()
+        {
+            await _dataContext.Books.AddAsync(BookBuilder.Given()
+                .SetTitle("Harry Potter i kamień Filozoficzny")
+                .SetAuthor("J.K. Rowling")
+                .SetReleaseDate(DateTime.Parse("26.06.1997"))
+                .SetDescription("Opowieść o młodym czarodzieju")
+                .Build()
+            );
+            await _dataContext.Books.AddAsync(BookBuilder.Given()
+                .SetTitle("Lalka")
+                .SetAuthor("Bolesław Prus")
+                .SetReleaseDate(DateTime.Parse("9.02.1887 "))
+                .SetDescription("Powieść społeczno-obyczajowa której głównym bohaterem jest Stanisław Wokulski")
+                .Build()
+            );;
+            await _dataContext.Books.AddAsync(BookBuilder.Given()
+                .SetTitle("Harry Potter i komnata tajemnic")
+                .SetAuthor("J.K. Rowling")
+                .SetReleaseDate(DateTime.Parse("26.06.1998"))
+                .SetDescription("Kolejna część opowieści o młodym czarodzieju")
+                .SetPreviousBookPart(_dataContext.Books.Where(b => b.Title == "Harry Potter i kamień Filozoficzny").FirstOrDefault())
+                .Build()
+            );
+            await _dataContext.SaveChangesAsync();
+
+            var books = await _dataContext.Books.ToListAsync();
+            return _mapper.Map<IEnumerable<BookModel>>(books);
         }
 
         [HttpGet]
@@ -99,7 +131,7 @@ namespace WebService.Controllers
 
                 return CreatedAtAction(nameof(GetById), new { id = book.Key }, book);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error while adding book");
                 return StatusCode(500, "Internal server error");
@@ -130,8 +162,8 @@ namespace WebService.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var book = await _dataContext.Books.Where(b => b.Key == id).FirstOrDefaultAsync();
-            
-            if(book == null)
+
+            if (book == null)
                 return NotFound();
 
             _dataContext.Books.Remove(book);

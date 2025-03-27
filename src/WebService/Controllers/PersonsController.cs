@@ -1,11 +1,16 @@
-﻿using Library.Messages.Commands.Persons;
+﻿using Library.Domain;
+using Library.Domain.Aggregates;
+using Library.Domain.Aggregates.BookBuilder;
+using Library.Messages.Commands.Persons;
 using Library.Messages.Models;
 using Library.Messages.Queries.Persons;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static Library.Domain.Aggregates.PersonFactory;
 
 namespace REST_API.Controllers
 {
@@ -15,10 +20,36 @@ namespace REST_API.Controllers
     public class PersonsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IDataContext _dataContext;
 
-        public PersonsController(IMediator mediator)        
+        public PersonsController(IMediator mediator, IDataContext dataContext)        
         {
             _mediator = mediator;
+            _dataContext = dataContext;
+        }
+
+        [HttpGet("users/populate")]
+        public async Task<IEnumerable<UserModel>> PopulateUsers()
+        {
+            PersonCreatorDelegate guestCreator = Library.Domain.Aggregates.User.CreateUser;
+            var userFactory = new PersonFactory(guestCreator);
+
+            _dataContext.Users.Add(userFactory.CreatePerson("Janusz", "Kowalski", "G1234", "jkoalski") as User);
+            _dataContext.Users.Add(userFactory.CreatePerson("Antoni", "Nowak", "G4321", "akowalski") as User);
+            await _dataContext.SaveChangesAsync();
+
+            return await _mediator.Send(new GetAllUsers());
+        }
+
+        [HttpGet("workers/populate")]
+        public async Task<IEnumerable<WorkerModel>> PopulateWorkers()
+        {
+            PersonCreatorDelegate workerCreator = Worker.CreateWorker;
+            var workerFactory = new PersonFactory(workerCreator);
+            _dataContext.Workers.Add(workerFactory.CreatePerson("Zuzanna", "Kowalska", "W1234", "zkowalska") as Worker);
+            await _dataContext.SaveChangesAsync();
+
+            return await _mediator.Send(new GetAllWorkers());
         }
 
         [HttpGet("workers")]
