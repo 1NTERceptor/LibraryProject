@@ -1,5 +1,4 @@
 ﻿using Library.Domain.Aggregates;
-using Library.Domain.Aggregates.BookBuilder;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,12 +43,11 @@ namespace Library.Domain.Services
 
                     if (bookData.Length == 4)
                     {
-                        var book = BookBuilder.Given()
-                            .SetTitle(bookData[0].Trim())
-                            .SetAuthor(bookData[1].Trim())
-                            .SetReleaseDate(DateTime.Parse(bookData[2].Trim()))
-                            .SetDescription(bookData[3].Trim())
-                            .Build();
+                        var book = new Book(
+                            bookData[0].Trim(),
+                            bookData[1].Trim(),
+                            DateTime.Parse(bookData[2].Trim()),
+                            bookData[3].Trim()); 
 
                         await _context.Books.AddAsync(book);
                         await _context.SaveChangesAsync();

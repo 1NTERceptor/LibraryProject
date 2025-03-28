@@ -24,5 +24,18 @@ namespace Library.Domain.Aggregates
 
             AddDomainEvent(new GuestCreated(Key, firstName, lastName));
         }
+
+        public void BorrowBook(Loan loan)
+        {
+            if(Loans.Count >= 5)
+                throw new System.ArgumentException("Nie można wypożyczyć więcej niż 5 książek");
+
+            Loans.Add(loan);
+        }
+
+        public void ReturnBook(Loan loan)
+        {
+            Loans.Remove(loan);
+        }
     }
 }

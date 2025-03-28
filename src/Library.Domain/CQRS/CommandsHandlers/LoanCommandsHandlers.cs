@@ -34,7 +34,7 @@ namespace Library.Domain.CQRS.CommandsHandlers
             if (user == null)
                 throw new ArgumentException($"Użytkownik o Id = ${request.UserId} nie istnieje");
 
-            var loan = new Loan(request.BookId, request.UserId, DateTime.Today, request.DateTo);
+            var loan = new Loan(request.BookId, request.UserId, DateTime.Today);
 
             await _loanRepository.AddAsync(loan);
             await _loanRepository.Commit();

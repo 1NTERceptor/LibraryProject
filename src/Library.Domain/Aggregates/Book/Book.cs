@@ -61,5 +61,20 @@ namespace Library.Domain.Aggregates
             PreviousPartOfSeries = previousPartOfSeries;
             PreviousPartOfSeries.IsSeries = true;
         }
+
+        public void ChangeDescription(string newDescription)
+        {
+            Description = newDescription;
+        }
+
+        public void Borrow(Loan loan)
+        {
+            Loan = loan;
+        }
+
+        public void Return()
+        {
+            Loan = null;
+        }
     }
 }

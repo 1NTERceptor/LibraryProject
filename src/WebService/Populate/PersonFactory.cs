@@ -1,4 +1,6 @@
-﻿namespace Library.Domain.Aggregates
+﻿using Library.Domain.Aggregates;
+
+namespace REST_API.Populate
 {
     public interface IPersonFactory
     {

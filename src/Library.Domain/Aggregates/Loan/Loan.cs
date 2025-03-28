@@ -27,14 +27,40 @@ namespace Library.Domain.Aggregates
         /// <summary>
         /// Data końca wypożyczenia
         /// </summary>
-        public DateTime DateTo { get; protected set; }        
+        public DateTime DueDate { get; protected set; }
 
-        public Loan(Guid bookId, Guid userId, DateTime dateFrom, DateTime dateTo) 
+        /// <summary>
+        /// Data zwrotu książki
+        /// </summary>
+        public DateTime DateTo { get; protected set; }
+
+        /// <summary>
+        /// Ilość razy przedłużenia wypożyczenia
+        /// </summary>
+        public short ProlongTimes { get; set; }
+
+        public Loan(Guid bookId, Guid userId, DateTime dateFrom) 
         {
             BookId = bookId;
             UserId = userId;
             DateFrom = dateFrom;
-            DateTo = dateTo;
+            DueDate = dateFrom.AddDays(30);
+        }
+
+        public void Return()
+        {
+            DateTo = DateTime.Today;
+            User = null;
+            Book = null;
+        }
+        
+        public void Prolong()
+        {
+            if(ProlongTimes>2)
+                throw new ArgumentException("Nie można przedłużyć wypożyczenia więcej niż 3 razy");
+
+            ProlongTimes++;
+            DateTo = DueDate.AddDays(30);
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Library.Domain.Aggregates;
+using System;
 
-namespace Library.Domain.Aggregates.BookBuilder
+namespace REST_API.Populate
 {
     public class BookBuilder
     {
