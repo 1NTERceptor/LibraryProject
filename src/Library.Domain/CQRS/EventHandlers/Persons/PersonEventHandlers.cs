@@ -16,14 +16,14 @@ namespace Library.Domain.CQRS.EventHandlers.Persons
 
         }
 
-        public Task Handle(WorkerCreated notification, CancellationToken cancellationToken)
+        public async Task Handle(WorkerCreated notification, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return;
         }
 
-        public Task Handle(GuestCreated notification, CancellationToken cancellationToken)
+        public async Task Handle(GuestCreated notification, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return;
         }
     }
 }

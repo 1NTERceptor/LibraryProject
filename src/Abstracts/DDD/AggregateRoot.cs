@@ -1,4 +1,5 @@
 ﻿using Abstracts.Event_Sourcing;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Abstracts.DDD
         }
 
         protected void AddDomainEvent(IDomainEvent eventItem)
-        {
+        {            
             DomainEvents.Add(eventItem);
         }
 

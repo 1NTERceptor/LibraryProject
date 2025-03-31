@@ -1,4 +1,6 @@
 ﻿using Abstracts.DDD;
+using Library.Messages.Events.Loan;
+using MediatR;
 using System;
 
 namespace Library.Domain.Aggregates
@@ -39,12 +41,16 @@ namespace Library.Domain.Aggregates
         /// </summary>
         public short ProlongTimes { get; set; }
 
-        public Loan(Guid bookId, Guid userId, DateTime dateFrom) 
+        public Loan() { }
+
+        public Loan(Guid bookId, Guid userId, DateTime dateFrom)
         {
-            BookId = bookId;
-            UserId = userId;
-            DateFrom = dateFrom;
+            BookId = bookId != Guid.Empty ? bookId : throw new ArgumentException($"Id książki jest nieprawidłowe = ${bookId}");
+            UserId = userId != Guid.Empty ? userId : throw new ArgumentException($"Id użytkownika jest nieprawidłowe = ${userId}"); ;
+            DateFrom = dateFrom != default ? dateFrom : throw new ArgumentException($"Data wypożyczenia książki jest nieprawidłowa = ${dateFrom}");
             DueDate = dateFrom.AddDays(30);
+
+            AddDomainEvent(new LoanCreated(this.Key, bookId, userId));
         }
 
         public void Return()
@@ -57,7 +63,7 @@ namespace Library.Domain.Aggregates
         public void Prolong()
         {
             if(ProlongTimes>2)
-                throw new ArgumentException("Nie można przedłużyć wypożyczenia więcej niż 3 razy");
+                throw new ArgumentException("Nie można przedłużyć książki więcej niż 3 razy");
 
             ProlongTimes++;
             DateTo = DueDate.AddDays(30);

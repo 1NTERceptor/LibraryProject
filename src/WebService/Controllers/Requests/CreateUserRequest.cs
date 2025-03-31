@@ -12,5 +12,8 @@ namespace REST_API.Controllers
 
         [Required]
         public string GuestCardNumber { get; set; }
+
+        [Required]
+        public string Login { get; set; }
     }
 }

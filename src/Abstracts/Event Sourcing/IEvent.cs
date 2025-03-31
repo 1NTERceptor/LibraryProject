@@ -1,4 +1,7 @@
-﻿namespace Abstracts.Event_Sourcing
+﻿using MediatR;
+
+namespace Abstracts.Event_Sourcing
 {
-    public interface IDomainEvent { }
+    public interface IDomainEvent : INotification
+    { }
 }

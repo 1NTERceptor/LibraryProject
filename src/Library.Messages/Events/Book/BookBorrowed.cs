@@ -1,12 +1,11 @@
 ﻿using Abstracts.Event_Sourcing;
-using MediatR;
 
 namespace Library.Messages.Events.Book
 {
-    public class BookBorrowed : IDomainEvent, INotification
+    public class BookBorrowed : IDomainEvent
     {
-        public int BookId { get; set; }
-        public int GuestId { get; set; }
+        public int BookId;
+        public int GuestId;
 
         public BookBorrowed(int bookId, int guestId)
         {

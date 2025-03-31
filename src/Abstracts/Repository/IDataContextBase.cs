@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Abstracts.Repository
@@ -7,6 +6,7 @@ namespace Abstracts.Repository
     public interface IDataContextBase
     {
         DbSet<T> Set<T>() where T : class;
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+        void SaveChanges();
+        Task SaveChangesAsync();
     }
 }

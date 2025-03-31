@@ -22,7 +22,7 @@ namespace Library.Domain.CommandsHandlers
         {
             try
             {
-                await _userRepository.AddAsync(User.CreateUser(request.FirstName, request.LastName, request.GuestCardNumber, null));
+                await _userRepository.AddAsync(User.CreateUser(request.FirstName, request.LastName, request.GuestCardNumber, request.Login));
                 await _userRepository.Commit();
             }
             catch(Exception ex)

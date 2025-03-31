@@ -11,8 +11,7 @@ namespace Library.Domain
         public DbSet<Worker> Workers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
-        public DbSet<Loan> Loans { get; set; }
-        public Task SaveChangesAsync();
+        public DbSet<Loan> Loans { get; set; }        
     }
 
     public class DataContext : DbContext, IDataContext
@@ -34,6 +33,11 @@ namespace Library.Domain
         public async Task SaveChangesAsync()
         {
             await base.SaveChangesAsync();
+        }
+
+        void IDataContextBase.SaveChanges()
+        {
+            base.SaveChanges();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -75,6 +79,6 @@ namespace Library.Domain
                  .WithOne(b => b.Loan)
                  .HasForeignKey<Loan>(l => l.BookId);
             });
-        }
+        }        
     }
 }

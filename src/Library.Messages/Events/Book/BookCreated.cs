@@ -1,9 +1,8 @@
 ﻿using Abstracts.Event_Sourcing;
-using MediatR;
 
 namespace Library.Messages.Events.Book
 {
-    public class BookCreated : IDomainEvent, INotification
+    public class BookCreated : IDomainEvent
     {
         public int BookId;
 

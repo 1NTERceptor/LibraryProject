@@ -1,15 +1,16 @@
 ﻿using Library.Messages.Events.User;
+using MediatR;
 using System.Collections.Generic;
 
 namespace Library.Domain.Aggregates
 {
     public class User : Person
     {
-        public string GuestCardNumber { get; private set; }
+        public string GuestCardNumber { get; protected set; }
 
-        public string City { get; private set; }
+        public string City { get; protected set; }
 
-        public List<Loan> Loans { get; private set; } = new List<Loan>();
+        public List<Loan> Loans { get; protected set; } = new List<Loan>();
 
         public static User CreateUser(string firstName, string lastName, string guestCardNumber, string login)
         {

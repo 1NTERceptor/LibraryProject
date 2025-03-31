@@ -1,10 +1,11 @@
 ﻿using Library.Messages.Events.Worker;
+using MediatR;
 
 namespace Library.Domain.Aggregates
 {
     public class Worker : Person
     {
-        public string EmployeeCardNumber { get; private set; }
+        public string EmployeeCardNumber { get; protected set; }
 
         public static Worker CreateWorker(string firstName, string lastName, string employeeCardNumber, string login)
         {

@@ -66,7 +66,7 @@ namespace REST_API.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
         {
-            var command = new CreateUserCommand(request.FirstName, request.LastName, request.GuestCardNumber);
+            var command = new CreateUserCommand(request.FirstName, request.LastName, request.GuestCardNumber, request.Login);
 
             return Ok(await _mediator.Send(command));
         }

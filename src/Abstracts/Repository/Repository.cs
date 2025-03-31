@@ -1,4 +1,5 @@
 ﻿using Abstracts.DDD;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,12 @@ namespace Abstracts.Repository
     public class Repository<T> : IRepository<T> where T : AggregateRoot
     {
         protected readonly IDataContextBase _context;
+        protected readonly IPublisher _publisher;
 
-        public Repository(IDataContextBase context)
+        public Repository(IDataContextBase context, IPublisher publisher)
         {
             _context = context;
+            _publisher = publisher;
         }
 
         public async Task AddAsync(T entity)
@@ -31,6 +34,22 @@ namespace Abstracts.Repository
         public async Task Commit()
         {
             await _context.SaveChangesAsync();
+
+            var domainEvents = _context.ChangeTracker
+                .Entries<AggregateRoot>()
+                .SelectMany(e => e.Entity.GetDomainEvents())
+                .ToList();
+
+            foreach (var domainEvent in domainEvents)
+            {
+                await _publisher.Publish(domainEvent);
+            }
+
+            // Czyścimy eventy po publikacji
+            foreach (var entity in _context.ChangeTracker.Entries<AggregateRoot>())
+            {
+                entity.Entity.ClearDomainEvents();
+            }
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()

@@ -1,7 +1,6 @@
 using Abstracts.DDD;
+using MediatR;
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Library.Domain.Aggregates
 {
@@ -10,47 +9,45 @@ namespace Library.Domain.Aggregates
         /// <summary>
         /// Tytu³
         /// </summary>
-        [Required]
-        public string Title { get; private set; }
+        public string Title { get; protected set; }
 
         /// <summary>
         /// Autor
         /// </summary>
-        [Required]
-        public string Author { get; private set; }
+        public string Author { get; protected set; }
 
         /// <summary>
         /// Data wydania ksi¹zki
         /// </summary>
-        public DateTime ReleaseDate { get; private set; }
+        public DateTime ReleaseDate { get; protected set; }
 
         /// <summary>
         /// Krótki opis ksi¹¿ki
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; protected set; }
 
         /// <summary>
         /// Czy jest to seria ksi¹¿ek
         /// </summary>
-        public bool IsSeries { get; private set; }
+        public bool IsSeries { get; protected set; }
 
         /// <summary>
         /// Poprzednia czêœæ ksi¹¿ki
         /// </summary>
-        public Book PreviousPartOfSeries { get; private set; }
+        public Book PreviousPartOfSeries { get; protected set; }
 
         /// <summary>
         /// Wypo¿yczenie ksi¹zki
         /// </summary>
-        public Loan Loan { get; private set; }
+        public Loan Loan { get; protected set; }
 
         public Book() { }
 
         public Book(string title, string author, DateTime releaseDate, string description, bool isSeries = false)
         {
-            Title = title;
-            Author = author;
-            ReleaseDate = releaseDate;
+            Title = !String.IsNullOrEmpty(title) ? title : throw new ArgumentException($"Tytu³ ksi¹¿ki jest nieprawid³owy = ${title}");
+            Author = !String.IsNullOrEmpty(author) ? author : throw new ArgumentException($"Autor ksi¹¿ki jest nieprawid³owy = ${author}");
+            ReleaseDate = releaseDate != default ? releaseDate : throw new ArgumentException($"Data wydania ksi¹¿ki jest nieprawid³owa = ${releaseDate}");
             Description = description;
             IsSeries = isSeries;
         }

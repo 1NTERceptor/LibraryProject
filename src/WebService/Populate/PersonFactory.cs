@@ -1,4 +1,5 @@
 ﻿using Library.Domain.Aggregates;
+using MediatR;
 
 namespace REST_API.Populate
 {

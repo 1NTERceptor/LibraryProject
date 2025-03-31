@@ -30,7 +30,11 @@ namespace WebService
             });
 
             services.AddDbContext<DataContext>(options =>
-                options.UseInMemoryDatabase("LibraryDB")
+
+                options.UseInMemoryDatabase(Configuration.GetConnectionString("DefaultConnection"))
+
+                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                //b => b.MigrationsAssembly("WebService"))
             );
 
             services.AddMediatR(cfg =>
