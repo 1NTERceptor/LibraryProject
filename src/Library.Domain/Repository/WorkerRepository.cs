@@ -1,5 +1,6 @@
 ﻿using Abstracts.Repository;
 using Library.Domain.Aggregates;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Library.Domain.Repository
     {
         private readonly DbSet<Worker> _workers;
 
-        public WorkerRepository(DataContext context) : base(context)
+        public WorkerRepository(IDbContext context, IPublisher publisher) : base(context, publisher)
         {
             _workers = _context.Set<Worker>();
         }

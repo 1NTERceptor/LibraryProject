@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Abstracts.Repository
@@ -17,10 +18,10 @@ namespace Abstracts.Repository
 
     public class Repository<T> : IRepository<T> where T : AggregateRoot
     {
-        protected readonly IDataContextBase _context;
+        protected readonly IDbContext _context;
         protected readonly IPublisher _publisher;
 
-        public Repository(IDataContextBase context, IPublisher publisher)
+        public Repository(IDbContext context, IPublisher publisher)
         {
             _context = context;
             _publisher = publisher;
@@ -45,7 +46,6 @@ namespace Abstracts.Repository
                 await _publisher.Publish(domainEvent);
             }
 
-            // Czyścimy eventy po publikacji
             foreach (var entity in _context.ChangeTracker.Entries<AggregateRoot>())
             {
                 entity.Entity.ClearDomainEvents();

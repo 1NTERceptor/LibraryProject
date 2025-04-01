@@ -1,5 +1,6 @@
 ﻿using Abstracts.Repository;
 using Library.Domain.Aggregates;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Library.Domain.Repository
     {
         private readonly DbSet<Loan> _loans;
 
-        public LoanRepository(DataContext context) : base(context)
+        public LoanRepository(IDbContext context, IPublisher publisher) : base(context, publisher)
         {
             _loans = _context.Set<Loan>();
         }

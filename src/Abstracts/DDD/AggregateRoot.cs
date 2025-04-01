@@ -1,5 +1,4 @@
 ﻿using Abstracts.Event_Sourcing;
-using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
