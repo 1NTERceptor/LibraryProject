@@ -4,12 +4,7 @@ using System.Threading.Tasks;
 
 namespace Abstracts.Repository
 {
-    public interface IDbContext : IDataContextBase
-    {
-        ChangeTracker ChangeTracker { get; }
-    }
-
-    public class ApplicationDbContext : DbContext, IDataContextBase, IDbContext
+    public class ApplicationDbContext : DbContext, IDataContextBase
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }

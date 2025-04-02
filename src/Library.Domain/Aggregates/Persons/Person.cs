@@ -1,6 +1,4 @@
 ﻿using Abstracts.DDD;
-using MediatR;
-using System;
 
 namespace Library.Domain.Aggregates
 {

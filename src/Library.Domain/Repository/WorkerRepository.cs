@@ -17,7 +17,7 @@ namespace Library.Domain.Repository
     {
         private readonly DbSet<Worker> _workers;
 
-        public WorkerRepository(IDbContext context, IPublisher publisher) : base(context, publisher)
+        public WorkerRepository(IDataContext context, IPublisher publisher) : base(context, publisher)
         {
             _workers = _context.Set<Worker>();
         }

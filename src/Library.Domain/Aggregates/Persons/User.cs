@@ -1,5 +1,4 @@
 ﻿using Library.Messages.Events.User;
-using MediatR;
 using System.Collections.Generic;
 
 namespace Library.Domain.Aggregates
@@ -23,7 +22,7 @@ namespace Library.Domain.Aggregates
         {
             GuestCardNumber = guestCardNumber;
 
-            AddDomainEvent(new GuestCreated(Key, firstName, lastName));
+            AddDomainEvent(new UserCreated(Key, firstName, lastName));
         }
 
         public void BorrowBook(Loan loan)

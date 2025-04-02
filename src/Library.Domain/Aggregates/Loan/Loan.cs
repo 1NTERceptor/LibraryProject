@@ -1,6 +1,5 @@
 ﻿using Abstracts.DDD;
 using Library.Messages.Events.Loan;
-using MediatR;
 using System;
 
 namespace Library.Domain.Aggregates
@@ -24,7 +23,7 @@ namespace Library.Domain.Aggregates
         /// <summary>
         /// Data początku wypożyczenia
         /// </summary>
-        public DateTime DateFrom { get; protected set; }
+        public DateTime StartDate { get; protected set; }
 
         /// <summary>
         /// Data końca wypożyczenia
@@ -34,7 +33,7 @@ namespace Library.Domain.Aggregates
         /// <summary>
         /// Data zwrotu książki
         /// </summary>
-        public DateTime DateTo { get; protected set; }
+        public DateTime EndDate { get; protected set; }
 
         /// <summary>
         /// Ilość razy przedłużenia wypożyczenia
@@ -43,19 +42,19 @@ namespace Library.Domain.Aggregates
 
         public Loan() { }
 
-        public Loan(Guid bookId, Guid userId, DateTime dateFrom)
+        public Loan(Guid bookId, Guid userId, DateTime fromDate)
         {
             BookId = bookId != Guid.Empty ? bookId : throw new ArgumentException($"Id książki jest nieprawidłowe = ${bookId}");
             UserId = userId != Guid.Empty ? userId : throw new ArgumentException($"Id użytkownika jest nieprawidłowe = ${userId}"); ;
-            DateFrom = dateFrom != default ? dateFrom : throw new ArgumentException($"Data wypożyczenia książki jest nieprawidłowa = ${dateFrom}");
-            DueDate = dateFrom.AddDays(30);
+            StartDate = fromDate != default ? fromDate : throw new ArgumentException($"Data wypożyczenia książki jest nieprawidłowa = ${fromDate}");
+            DueDate = fromDate.AddDays(30);
 
             AddDomainEvent(new LoanCreated(this.Key, bookId, userId));
         }
 
         public void Return()
         {
-            DateTo = DateTime.Today;
+            EndDate = DateTime.Today;
             User = null;
             Book = null;
         }
@@ -66,7 +65,7 @@ namespace Library.Domain.Aggregates
                 throw new ArgumentException("Nie można przedłużyć książki więcej niż 3 razy");
 
             ProlongTimes++;
-            DateTo = DueDate.AddDays(30);
+            EndDate = DueDate.AddDays(30);
         }
     }
 }

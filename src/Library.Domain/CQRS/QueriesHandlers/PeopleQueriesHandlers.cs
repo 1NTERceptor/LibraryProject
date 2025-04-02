@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Library.Domain.Aggregates;
 using Library.Domain.Repository;
 using Library.Messages.Models;
 using Library.Messages.Queries.Persons;

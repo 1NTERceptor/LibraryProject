@@ -1,5 +1,4 @@
 ﻿using Library.Messages.Events.Worker;
-using MediatR;
 
 namespace Library.Domain.Aggregates
 {

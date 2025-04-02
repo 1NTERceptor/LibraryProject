@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using Library.Domain.Aggregates;
 using Library.Messages.Models;
 using Library.Messages.Queries.Books;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

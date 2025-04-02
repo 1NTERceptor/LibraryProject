@@ -17,7 +17,7 @@ namespace Library.Domain.Repository
     {
         private readonly DbSet<Loan> _loans;
 
-        public LoanRepository(IDbContext context, IPublisher publisher) : base(context, publisher)
+        public LoanRepository(IDataContext context, IPublisher publisher) : base(context, publisher)
         {
             _loans = _context.Set<Loan>();
         }

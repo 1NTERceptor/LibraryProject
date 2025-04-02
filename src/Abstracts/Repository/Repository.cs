@@ -18,10 +18,10 @@ namespace Abstracts.Repository
 
     public class Repository<T> : IRepository<T> where T : AggregateRoot
     {
-        protected readonly IDbContext _context;
+        protected readonly IDataContextBase _context;
         protected readonly IPublisher _publisher;
 
-        public Repository(IDbContext context, IPublisher publisher)
+        public Repository(IDataContextBase context, IPublisher publisher)
         {
             _context = context;
             _publisher = publisher;

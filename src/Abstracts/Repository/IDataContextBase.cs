@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Threading.Tasks;
 
 namespace Abstracts.Repository
@@ -8,5 +9,6 @@ namespace Abstracts.Repository
         DbSet<T> Set<T>() where T : class;
         void SaveChanges();
         Task SaveChangesAsync();
+        ChangeTracker ChangeTracker { get; }
     }
 }

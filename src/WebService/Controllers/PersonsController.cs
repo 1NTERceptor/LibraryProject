@@ -1,5 +1,6 @@
 ﻿using Library.Domain;
 using Library.Domain.Aggregates;
+using Library.Domain.Repository;
 using Library.Messages.Commands.Persons;
 using Library.Messages.Models;
 using Library.Messages.Queries.Persons;
@@ -19,12 +20,14 @@ namespace REST_API.Controllers
     public class PersonsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IDataContext _dataContext;
+        private readonly IUserRepository _userRepository;
+        private readonly IWorkerRepository _workerRepository;
 
-        public PersonsController(IMediator mediator, IDataContext dataContext)        
+        public PersonsController(IMediator mediator, IUserRepository userRepository, IWorkerRepository workerRepository)        
         {
             _mediator = mediator;
-            _dataContext = dataContext;
+            _userRepository = userRepository;
+            _workerRepository = workerRepository;
         }
 
         [HttpGet("users/populate")]
@@ -33,9 +36,9 @@ namespace REST_API.Controllers
             PersonCreatorDelegate guestCreator = Library.Domain.Aggregates.User.CreateUser;
             var userFactory = new PersonFactory(guestCreator);
 
-            _dataContext.Users.Add(userFactory.CreatePerson("Janusz", "Kowalski", "G1234", "jkoalski") as User);
-            _dataContext.Users.Add(userFactory.CreatePerson("Antoni", "Nowak", "G4321", "akowalski") as User);
-            await _dataContext.SaveChangesAsync();
+            await _userRepository.AddAsync(userFactory.CreatePerson("Janusz", "Kowalski", "G1234", "jkoalski") as User);
+            await _userRepository.AddAsync(userFactory.CreatePerson("Antoni", "Nowak", "G4321", "akowalski") as User);
+            await _userRepository.Commit();
 
             return await _mediator.Send(new GetAllUsers());
         }
@@ -45,8 +48,8 @@ namespace REST_API.Controllers
         {
             PersonCreatorDelegate workerCreator = Worker.CreateWorker;
             var workerFactory = new PersonFactory(workerCreator);
-            _dataContext.Workers.Add(workerFactory.CreatePerson("Zuzanna", "Kowalska", "W1234", "zkowalska") as Worker);
-            await _dataContext.SaveChangesAsync();
+            await _workerRepository.AddAsync(workerFactory.CreatePerson("Zuzanna", "Kowalska", "W1234", "zkowalska") as Worker);
+            await _workerRepository.Commit();
 
             return await _mediator.Send(new GetAllWorkers());
         }

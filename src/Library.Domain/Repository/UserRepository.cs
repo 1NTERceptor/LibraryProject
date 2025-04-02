@@ -18,7 +18,7 @@ namespace Library.Domain.Repository
     {
         private readonly DbSet<User> _users;
 
-        public UserRepository(IDbContext context, IPublisher publisher) : base(context, publisher)
+        public UserRepository(IDataContext context, IPublisher publisher) : base(context, publisher)
         {
             _users = _context.Set<User>();
         }

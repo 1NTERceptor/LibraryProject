@@ -1,7 +1,6 @@
 ﻿using Library.Messages.Events.User;
 using Library.Messages.Events.Worker;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,7 +8,7 @@ namespace Library.Domain.CQRS.EventHandlers.Persons
 {
     public class PersonEventHandlers : 
         INotificationHandler<WorkerCreated>,
-        INotificationHandler<GuestCreated>
+        INotificationHandler<UserCreated>
     {
         public PersonEventHandlers()
         {
@@ -21,7 +20,7 @@ namespace Library.Domain.CQRS.EventHandlers.Persons
             return;
         }
 
-        public async Task Handle(GuestCreated notification, CancellationToken cancellationToken)
+        public async Task Handle(UserCreated notification, CancellationToken cancellationToken)
         {
             return;
         }

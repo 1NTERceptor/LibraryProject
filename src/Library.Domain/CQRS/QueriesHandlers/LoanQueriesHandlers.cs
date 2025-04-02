@@ -3,10 +3,7 @@ using Library.Domain.Repository;
 using Library.Messages.Models;
 using Library.Messages.Queries.Persons;
 using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
