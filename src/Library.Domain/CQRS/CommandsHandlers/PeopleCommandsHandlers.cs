@@ -1,12 +1,12 @@
-﻿using Library.Domain.Aggregates;
-using Library.Domain.Repository;
+﻿using Domain.Aggregates.Persons;
+using Domain.Repository;
 using Library.Messages.Commands.Persons;
 using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Library.Domain.CommandsHandlers
+namespace Domain.CQRS.CommandsHandlers
 {
     public class PeopleCommandsHandlers :
         IRequestHandler<CreateUserCommand, bool>

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Library.Messages.Commands.Persons
+namespace Application.CQRS.Commands.Persons
 {
     public class CreateUserCommand : IRequest<bool>
     {

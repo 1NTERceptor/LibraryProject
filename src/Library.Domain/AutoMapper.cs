@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
-using Library.Domain.Aggregates;
+using Domain.Aggregates.Book;
+using Domain.Aggregates.Loan;
+using Domain.Aggregates.Persons;
 using Library.Messages.Models;
 
-namespace Library.Domain
+namespace Domain
 {
     public class LibraryMapper : Profile
     {

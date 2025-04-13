@@ -1,6 +1,6 @@
 ﻿using Abstracts.Event_Sourcing;
 
-namespace Library.Messages.Events.Book
+namespace Domain.Events.Book
 {
     public class BookCreated : IDomainEvent
     {

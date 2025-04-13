@@ -1,6 +1,6 @@
 ﻿using Abstracts.Event_Sourcing;
 
-namespace Library.Messages.Events.Loan
+namespace Domain.Events.Loan
 {
     public class LoanCreated : IDomainEvent
     {

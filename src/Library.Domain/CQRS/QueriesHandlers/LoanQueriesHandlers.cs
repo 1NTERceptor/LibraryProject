@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using Library.Domain.Repository;
+using Domain.Repository;
 using Library.Messages.Models;
-using Library.Messages.Queries.Persons;
+using Library.Messages.Queries.Loans;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Library.Domain.CQRS.QueriesHandlers
+namespace Domain.CQRS.QueriesHandlers
 {
     public class LoanQueriesHandlers :
         IRequestHandler<GetAllLoans, IEnumerable<LoanModel>>,

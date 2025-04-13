@@ -1,11 +1,11 @@
-﻿using Abstracts.Repository;
-using Library.Domain.Aggregates;
+﻿using Domain.Aggregates.Persons;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Repository;
 using System;
 using System.Threading.Tasks;
 
-namespace Library.Domain.Repository
+namespace Domain.Repository
 {
     public interface IWorkerRepository : IRepository<Worker>
     {

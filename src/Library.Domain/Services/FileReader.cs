@@ -1,11 +1,12 @@
-﻿using Library.Domain.Aggregates;
+﻿using Domain;
+using Domain.Aggregates.Book;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Domain.Services
+namespace Domain.Services
 {
     public interface IFileReader
     {

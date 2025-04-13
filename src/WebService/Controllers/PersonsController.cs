@@ -1,12 +1,13 @@
-﻿using Library.Domain;
-using Library.Domain.Aggregates;
-using Library.Domain.Repository;
+﻿using Domain.Aggregates.Persons;
+using Domain.Repository;
+using Library.Domain;
 using Library.Messages.Commands.Persons;
 using Library.Messages.Models;
 using Library.Messages.Queries.Persons;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using REST_API.Controllers.Requests;
 using REST_API.Populate;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace REST_API.Controllers
         [HttpGet("users/populate")]
         public async Task<IEnumerable<UserModel>> PopulateUsers()
         {
-            PersonCreatorDelegate guestCreator = Library.Domain.Aggregates.User.CreateUser;
+            PersonCreatorDelegate guestCreator = Domain.Aggregates.Persons.User.CreateUser;
             var userFactory = new PersonFactory(guestCreator);
 
             await _userRepository.AddAsync(userFactory.CreatePerson("Janusz", "Kowalski", "G1234", "jkoalski") as User);

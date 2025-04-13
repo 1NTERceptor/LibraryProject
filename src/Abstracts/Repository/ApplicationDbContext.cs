@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Threading.Tasks;
 
-namespace Abstracts.Repository
+namespace SharedKernel.Repository
 {
     public class ApplicationDbContext : DbContext, IDataContextBase
     {

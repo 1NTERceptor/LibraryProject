@@ -1,6 +1,6 @@
-﻿using Abstracts.DDD;
+﻿using SharedKernel.DDD;
 
-namespace Library.Domain.Aggregates
+namespace Domain.Aggregates.Persons
 {
     public abstract class Person : AggregateRoot
     {

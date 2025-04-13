@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Abstracts.DDD
+namespace SharedKernel.DDD
 {
     public abstract class AggregateRoot
     {

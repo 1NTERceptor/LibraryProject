@@ -1,4 +1,4 @@
-﻿namespace Library.Domain.Enumes
+﻿namespace Domain.Enumes
 {
     public enum PersonType
     {

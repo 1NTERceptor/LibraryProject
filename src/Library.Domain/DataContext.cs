@@ -1,9 +1,11 @@
-﻿using Abstracts.Repository;
-using Library.Domain.Aggregates;
+﻿using Domain.Aggregates.Book;
+using Domain.Aggregates.Loan;
+using Domain.Aggregates.Persons;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Repository;
 using System.Threading.Tasks;
 
-namespace Library.Domain
+namespace Domain
 {
     public interface IDataContext : IDataContextBase
     {

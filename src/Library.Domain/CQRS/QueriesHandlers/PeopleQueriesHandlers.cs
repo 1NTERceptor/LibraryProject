@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Library.Domain.Repository;
+using Domain.Repository;
 using Library.Messages.Models;
 using Library.Messages.Queries.Persons;
 using MediatR;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace REST_API.QueriesHandlers
+namespace Domain.CQRS.QueriesHandlers
 {
     public class PeopleQueriesHandlers : 
         IRequestHandler<GetAllWorkers, IEnumerable<WorkerModel>>,

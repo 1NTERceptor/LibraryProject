@@ -1,7 +1,7 @@
 ﻿using Library.Messages.Models;
 using MediatR;
 
-namespace Library.Messages.Queries.Persons
+namespace Library.Messages.Queries.Loans
 {
     public class GetLoanById : IRequest<LoanModel>
     {

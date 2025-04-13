@@ -1,6 +1,6 @@
-﻿using Library.Messages.Events.Worker;
+﻿using Domain.Events.Worker;
 
-namespace Library.Messages.Events.User
+namespace Domain.Events.User
 {
     public class UserCreated : PersonCreated
     {

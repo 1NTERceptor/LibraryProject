@@ -1,7 +1,7 @@
 ﻿using Abstracts.Event_Sourcing;
 using MediatR;
 
-namespace Library.Messages.Events.Worker
+namespace Domain.Events.Worker
 {
     public class PersonCreated : IDomainEvent, INotification
     {

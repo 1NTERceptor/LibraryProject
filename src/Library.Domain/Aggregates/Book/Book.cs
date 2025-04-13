@@ -1,7 +1,7 @@
-using Abstracts.DDD;
+using SharedKernel.DDD;
 using System;
 
-namespace Library.Domain.Aggregates
+namespace Domain.Aggregates.Book
 {
     public class Book : AggregateRoot
     {
@@ -44,8 +44,8 @@ namespace Library.Domain.Aggregates
 
         public Book(string title, string author, DateTime releaseDate, string description, bool isSeries = false)
         {
-            Title = !String.IsNullOrEmpty(title) ? title : throw new ArgumentException($"Tytu³ ksi¹¿ki jest nieprawid³owy = ${title}");
-            Author = !String.IsNullOrEmpty(author) ? author : throw new ArgumentException($"Autor ksi¹¿ki jest nieprawid³owy = ${author}");
+            Title = !string.IsNullOrEmpty(title) ? title : throw new ArgumentException($"Tytu³ ksi¹¿ki jest nieprawid³owy = ${title}");
+            Author = !string.IsNullOrEmpty(author) ? author : throw new ArgumentException($"Autor ksi¹¿ki jest nieprawid³owy = ${author}");
             ReleaseDate = releaseDate != default ? releaseDate : throw new ArgumentException($"Data wydania ksi¹¿ki jest nieprawid³owa = ${releaseDate}");
             Description = description;
             IsSeries = isSeries;

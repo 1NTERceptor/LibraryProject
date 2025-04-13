@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace REST_API.Controllers
+namespace REST_API.Controllers.Requests
 {
     public class CreateLoanRequest
     {

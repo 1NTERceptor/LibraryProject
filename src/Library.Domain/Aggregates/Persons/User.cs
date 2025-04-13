@@ -1,7 +1,7 @@
 ﻿using Library.Messages.Events.User;
 using System.Collections.Generic;
 
-namespace Library.Domain.Aggregates
+namespace Domain.Aggregates.Persons
 {
     public class User : Person
     {

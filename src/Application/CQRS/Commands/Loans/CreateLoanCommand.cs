@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Library.Messages.Commands.Loans
+namespace Application.CQRS.Commands.Loans
 {
     public class CreateLoanCommand : IRequest<Guid>
     {

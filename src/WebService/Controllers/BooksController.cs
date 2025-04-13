@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Library.Domain;
-using Library.Domain.Aggregates;
-using Library.Domain.Services;
+using Domain;
+using Domain.Aggregates.Book;
+using Domain.Services;
 using Library.Messages.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebService.Controllers
+namespace REST_API.Controllers
 {
     [Route("api/v1/[Area]")]
     [Area("books")]

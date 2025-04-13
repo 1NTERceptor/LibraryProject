@@ -1,7 +1,7 @@
 ﻿using Abstracts.Event_Sourcing;
 using MediatR;
 
-namespace Library.Messages.Events.User
+namespace Domain.Events.User
 {
     public class GuestBorrowedBook : IDomainEvent, INotification
     {

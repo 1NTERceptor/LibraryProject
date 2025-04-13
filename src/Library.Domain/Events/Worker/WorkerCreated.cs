@@ -1,4 +1,4 @@
-﻿namespace Library.Messages.Events.Worker
+﻿namespace Domain.Events.Worker
 {
     public class WorkerCreated : PersonCreated
     {

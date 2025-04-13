@@ -1,8 +1,10 @@
-﻿using Abstracts.DDD;
+﻿using Domain.Aggregates.Book;
+using Domain.Aggregates.Persons;
 using Library.Messages.Events.Loan;
+using SharedKernel.DDD;
 using System;
 
-namespace Library.Domain.Aggregates
+namespace Domain.Aggregates.Loan
 {
     public class Loan : AggregateRoot
     {
@@ -49,7 +51,7 @@ namespace Library.Domain.Aggregates
             StartDate = fromDate != default ? fromDate : throw new ArgumentException($"Data wypożyczenia książki jest nieprawidłowa = ${fromDate}");
             DueDate = fromDate.AddDays(30);
 
-            AddDomainEvent(new LoanCreated(this.Key, bookId, userId));
+            AddDomainEvent(new LoanCreated(Key, bookId, userId));
         }
 
         public void Return()

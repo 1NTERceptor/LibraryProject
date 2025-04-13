@@ -1,7 +1,7 @@
-using Library.Domain;
-using Library.Domain.CommandsHandlers;
-using Library.Domain.Repository;
-using Library.Domain.Services;
+using Domain;
+using Domain.CQRS.CommandsHandlers;
+using Domain.Repository;
+using Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace WebService
+namespace REST_API
 {
     public class Startup
     {

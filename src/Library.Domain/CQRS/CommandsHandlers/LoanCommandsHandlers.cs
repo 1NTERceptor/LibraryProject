@@ -1,12 +1,12 @@
-﻿using Library.Domain.Aggregates;
-using Library.Domain.Repository;
+﻿using Domain.Repository;
+using Library.Domain.Aggregates;
 using Library.Messages.Commands.Loans;
 using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Library.Domain.CQRS.CommandsHandlers
+namespace Domain.CQRS.CommandsHandlers
 {
     public class LoanCommandsHandlers :        
         IRequestHandler<CreateLoanCommand, Guid>

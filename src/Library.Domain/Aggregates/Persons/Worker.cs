@@ -1,6 +1,6 @@
 ﻿using Library.Messages.Events.Worker;
 
-namespace Library.Domain.Aggregates
+namespace Domain.Aggregates.Persons
 {
     public class Worker : Person
     {

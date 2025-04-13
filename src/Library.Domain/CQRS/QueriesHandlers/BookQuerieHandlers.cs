@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain;
 using Library.Messages.Models;
 using Library.Messages.Queries.Books;
 using MediatR;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Library.Domain.CQRS.QueriesHandlers
+namespace Domain.CQRS.QueriesHandlers
 {
     public class BookQuerieHandlers : IRequestHandler<GetAllBooks, IEnumerable<BookModel>>
     {
