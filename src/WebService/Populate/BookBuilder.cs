@@ -1,4 +1,4 @@
-﻿using Domain.Aggregates.Book;
+﻿using Domain.Aggregates.Books;
 using System;
 
 namespace REST_API.Populate

@@ -1,8 +1,6 @@
-﻿using Library.Messages.Events.User;
-using Library.Messages.Events.Worker;
+﻿using Domain.Events.User;
+using Domain.Events.Worker;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.CQRS.EventHandlers.Persons
 {

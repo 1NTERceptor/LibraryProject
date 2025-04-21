@@ -1,10 +1,8 @@
 ﻿using Application.CQRS.Commands.Loans;
-using Library.Domain.Aggregates;
-using Library.Domain.Repository;
+using Domain;
+using Domain.Aggregates.Loans;
+using Domain.Repository;
 using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.CQRS.CommandsHandlers
 {

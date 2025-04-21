@@ -1,11 +1,8 @@
 ﻿using Application.CQRS.Queries.Persons;
 using AutoMapper;
-using Library.Domain.Repository;
+using Domain.Repository;
 using Library.Messages.Models;
 using MediatR;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.CQRS.QueriesHandlers
 {

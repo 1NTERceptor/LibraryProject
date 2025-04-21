@@ -1,9 +1,8 @@
-﻿using Domain.Aggregates.Persons;
+﻿using Application.CQRS.Commands.Persons;
+using Application.CQRS.Queries.Persons;
+using Domain.Aggregates.Persons;
 using Domain.Repository;
-using Library.Domain;
-using Library.Messages.Commands.Persons;
 using Library.Messages.Models;
-using Library.Messages.Queries.Persons;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

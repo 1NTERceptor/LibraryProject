@@ -1,6 +1,6 @@
-﻿using Library.Messages.Commands.Loans;
+﻿using Application.CQRS.Commands.Loans;
+using Application.CQRS.Queries.Loans;
 using Library.Messages.Models;
-using Library.Messages.Queries.Persons;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using REST_API.Controllers.Requests;

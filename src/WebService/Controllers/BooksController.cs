@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Domain;
-using Domain.Aggregates.Book;
+using Domain.Aggregates.Books;
 using Domain.Services;
 using Library.Messages.Models;
 using Microsoft.AspNetCore.Mvc;

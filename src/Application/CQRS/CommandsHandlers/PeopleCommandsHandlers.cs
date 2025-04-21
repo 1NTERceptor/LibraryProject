@@ -1,10 +1,7 @@
 ﻿using Application.CQRS.Commands.Persons;
-using Library.Domain.Aggregates;
-using Library.Domain.Repository;
+using Domain.Aggregates.Persons;
+using Domain.Repository;
 using MediatR;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.CQRS.CommandsHandlers
 {

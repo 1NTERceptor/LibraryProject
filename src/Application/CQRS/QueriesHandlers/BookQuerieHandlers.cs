@@ -1,5 +1,6 @@
 ﻿using Application.CQRS.Queries.Books;
 using AutoMapper;
+using Domain;
 using Library.Messages.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

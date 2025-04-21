@@ -1,5 +1,5 @@
+using Application.CQRS.CommandsHandlers;
 using Domain;
-using Domain.CQRS.CommandsHandlers;
 using Domain.Repository;
 using Domain.Services;
 using Microsoft.AspNetCore.Builder;
