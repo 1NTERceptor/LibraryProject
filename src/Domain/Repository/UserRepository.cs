@@ -10,8 +10,6 @@ namespace Domain.Repository
     public interface IUserRepository : IRepository<User>
     {    
         Task UpdateAsync(User person);
-
-        Task DeleteAsync(Guid id);
     }
 
     public class UserRepository : Repository<User>, IUserRepository
@@ -27,16 +25,6 @@ namespace Domain.Repository
         {
             _users.Update(user);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteAsync(Guid id)
-        {
-            var user = await GetByIdAsync(id);
-            if (user != null)
-            {
-                _users.Remove(user);
-                await _context.SaveChangesAsync();
-            }
         }
     }
 }

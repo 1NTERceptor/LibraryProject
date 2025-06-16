@@ -1,9 +1,9 @@
-﻿using Library.Messages.Models;
+﻿using Domain.Aggregates.Persons;
 using MediatR;
 
 namespace Application.CQRS.Queries.Persons
 {
-    public class GetAllUsers : IRequest<IEnumerable<UserModel>>
+    public class GetAllUsers : IRequest<IEnumerable<User>>
     {
     }
 }

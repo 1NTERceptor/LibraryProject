@@ -13,6 +13,7 @@ namespace SharedKernel.Repository
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(Guid id);
         Task AddAsync(T entity);
+        Task DeleteAsync(Guid id);
         Task Commit();
     }
 
@@ -25,11 +26,28 @@ namespace SharedKernel.Repository
         {
             _context = context;
             _publisher = publisher;
+        }           
+      
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await _context.Set<T>().ToListAsync();
+        }
+
+        public async Task<T> GetByIdAsync(Guid id)
+        {
+            return await _context.Set<T>().FindAsync(id);
         }
 
         public async Task AddAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var obj = await _context.Set<T>().FindAsync(id);
+
+            _context.Set<T>().Remove(obj);
         }
 
         public async Task Commit()
@@ -50,16 +68,6 @@ namespace SharedKernel.Repository
             {
                 entity.Entity.ClearDomainEvents();
             }
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            return await _context.Set<T>().ToListAsync();
-        }
-
-        public async Task<T> GetByIdAsync(Guid id)
-        {
-            return await _context.Set<T>().FindAsync(id);
         }
     }
 }

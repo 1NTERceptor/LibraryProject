@@ -1,16 +1,13 @@
 ﻿using Application.CQRS.Queries.Books;
 using AutoMapper;
 using Domain;
-using Library.Messages.Models;
+using Domain.Aggregates.Books;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Application.CQRS.QueriesHandlers
 {
-    public class BookQuerieHandlers : IRequestHandler<GetAllBooks, IEnumerable<BookModel>>
+    public class BookQuerieHandlers : IRequestHandler<GetAllBooks, IEnumerable<Book>>
     {
         private readonly IDataContext _dataContext;
         private readonly IMapper _mapper;
@@ -20,10 +17,9 @@ namespace Application.CQRS.QueriesHandlers
             _dataContext = dataCotext;
         }
 
-        public async Task<IEnumerable<BookModel>> Handle(GetAllBooks request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Book>> Handle(GetAllBooks request, CancellationToken cancellationToken)
         {
-            var books = await _dataContext.Books.ToListAsync();
-            return _mapper.Map<IEnumerable<BookModel>>(books);
+            return await _dataContext.Books.ToListAsync();            
         }
     }
 }

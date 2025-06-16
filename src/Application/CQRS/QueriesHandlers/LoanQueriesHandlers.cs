@@ -1,14 +1,14 @@
 ﻿using Application.CQRS.Queries.Loans;
 using AutoMapper;
+using Domain.Aggregates.Loans;
 using Domain.Repository;
-using Library.Messages.Models;
 using MediatR;
 
 namespace Application.CQRS.QueriesHandlers
 {
     public class LoanQueriesHandlers :
-        IRequestHandler<GetAllLoans, IEnumerable<LoanModel>>,
-        IRequestHandler<GetLoanById, LoanModel>
+        IRequestHandler<GetAllLoans, IEnumerable<Loan>>,
+        IRequestHandler<GetLoanById, Loan>
     {
         private readonly ILoanRepository _loanRepository;
         private readonly IMapper _mapper;
@@ -18,16 +18,16 @@ namespace Application.CQRS.QueriesHandlers
             _loanRepository = loanRepository;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<LoanModel>> Handle(GetAllLoans request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Loan>> Handle(GetAllLoans request, CancellationToken cancellationToken)
         {
             var loans = await _loanRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<LoanModel>>(loans);
+            return _mapper.Map<IEnumerable<Loan>>(loans);
         }
 
-        public async Task<LoanModel> Handle(GetLoanById request, CancellationToken cancellationToken)
+        public async Task<Loan> Handle(GetLoanById request, CancellationToken cancellationToken)
         {
             var loan = await _loanRepository.GetByIdAsync(request.Id);
-            return _mapper.Map<LoanModel>(loan);
+            return _mapper.Map<Loan>(loan);
         }
     }
 }

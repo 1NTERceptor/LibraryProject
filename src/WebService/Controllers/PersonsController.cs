@@ -1,5 +1,8 @@
 ﻿using Application.CQRS.Commands.Persons;
+using Application.CQRS.Queries.Loans;
 using Application.CQRS.Queries.Persons;
+using AutoMapper;
+using Domain.Aggregates.Loans;
 using Domain.Aggregates.Persons;
 using Domain.Repository;
 using Library.Messages.Models;
@@ -22,12 +25,14 @@ namespace REST_API.Controllers
         private readonly IMediator _mediator;
         private readonly IUserRepository _userRepository;
         private readonly IWorkerRepository _workerRepository;
+        private readonly IMapper _mapper;
 
-        public PersonsController(IMediator mediator, IUserRepository userRepository, IWorkerRepository workerRepository)        
+        public PersonsController(IMediator mediator, IUserRepository userRepository, IWorkerRepository workerRepository, IMapper mapper)
         {
             _mediator = mediator;
             _userRepository = userRepository;
             _workerRepository = workerRepository;
+            _mapper = mapper;
         }
 
         [HttpGet("users/populate")]
@@ -40,7 +45,9 @@ namespace REST_API.Controllers
             await _userRepository.AddAsync(userFactory.CreatePerson("Antoni", "Nowak", "G4321", "akowalski") as User);
             await _userRepository.Commit();
 
-            return await _mediator.Send(new GetAllUsers());
+            var users = await _mediator.Send(new GetAllUsers());
+
+            return _mapper.Map<IEnumerable<UserModel>>(users);
         }
 
         [HttpGet("workers/populate")]
@@ -51,19 +58,25 @@ namespace REST_API.Controllers
             await _workerRepository.AddAsync(workerFactory.CreatePerson("Zuzanna", "Kowalska", "W1234", "zkowalska") as Worker);
             await _workerRepository.Commit();
 
-            return await _mediator.Send(new GetAllWorkers());
+            var workers = await _mediator.Send(new GetAllWorkers());
+
+            return _mapper.Map<IEnumerable<WorkerModel>>(workers);
         }
 
         [HttpGet("workers")]
         public async Task<IEnumerable<WorkerModel>> GetAllWorkers()
         {
-            return await _mediator.Send(new GetAllWorkers());
+            var workers = await _mediator.Send(new GetAllWorkers());
+
+            return _mapper.Map<IEnumerable<WorkerModel>>(workers);
         }
 
         [HttpGet("users")]
         public async Task<IEnumerable<UserModel>> GetAllUsers()
         {
-            return await _mediator.Send(new GetAllUsers());
+            var users = await _mediator.Send(new GetAllUsers());
+
+            return _mapper.Map<IEnumerable<UserModel>>(users);
         }
 
         [HttpPost("create")]

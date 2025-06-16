@@ -1,4 +1,6 @@
-﻿namespace Library.Messages.Models
+﻿using System;
+
+namespace Library.Messages.Models
 {
     public class LoanModel
     {
