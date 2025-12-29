@@ -1,14 +1,9 @@
 ﻿using Application.CQRS.Commands.Loans;
 using Application.CQRS.Queries.Loans;
 using AutoMapper;
-using Domain.Aggregates.Loans;
 using Library.Messages.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using REST_API.Controllers.Requests;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace REST_API.Controllers
 {
@@ -43,10 +38,8 @@ namespace REST_API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<Guid> Create([FromBody] CreateLoanRequest request)
+        public async Task<Guid> Create([FromBody] CreateLoanCommand command)
         {
-            var command = new CreateLoanCommand(request.BookId, request.UserId, request.DateTo);
-
             return await _mediator.Send(command);
         }
 

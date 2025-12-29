@@ -1,18 +1,12 @@
 ﻿using Application.CQRS.Commands.Persons;
-using Application.CQRS.Queries.Loans;
 using Application.CQRS.Queries.Persons;
 using AutoMapper;
-using Domain.Aggregates.Loans;
 using Domain.Aggregates.Persons;
 using Domain.Repository;
 using Library.Messages.Models;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using REST_API.Controllers.Requests;
 using REST_API.Populate;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using static REST_API.Populate.PersonFactory;
 
 namespace REST_API.Controllers
@@ -80,10 +74,8 @@ namespace REST_API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
         {
-            var command = new CreateUserCommand(request.FirstName, request.LastName, request.GuestCardNumber, request.Login);
-
             return Ok(await _mediator.Send(command));
         }
 
