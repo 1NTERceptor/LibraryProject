@@ -1,6 +1,6 @@
 ﻿using Application.CQRS.Commands.Persons;
 using Domain.Aggregates.Persons;
-using Domain.Repository;
+using Application.Contracts;
 using MediatR;
 
 namespace Application.CQRS.CommandsHandlers

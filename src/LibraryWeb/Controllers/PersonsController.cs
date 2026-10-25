@@ -1,8 +1,8 @@
-﻿using Application.CQRS.Commands.Persons;
+﻿using Application.Contracts;
+using Application.CQRS.Commands.Persons;
 using Application.CQRS.Queries.Persons;
 using AutoMapper;
 using Domain.Aggregates.Persons;
-using Domain.Repository;
 using Library.Messages.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

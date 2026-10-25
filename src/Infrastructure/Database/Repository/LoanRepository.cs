@@ -1,22 +1,17 @@
-﻿using Domain.Aggregates.Loans;
+﻿using Application.Contracts;
+using Domain.Aggregates.Loans;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel.Repository;
-using System;
-using System.Threading.Tasks;
 
-namespace Domain.Repository
-{
-    public interface ILoanRepository : IRepository<Loan>
-    {
-        Task UpdateAsync(Loan loan);
-    }
+namespace Infrastructure.Database.Repository
+{   
 
     public class LoanRepository : Repository<Loan>, ILoanRepository
     {
         private readonly DbSet<Loan> _loans;
 
-        public LoanRepository(IDataContext context, IPublisher publisher) : base(context, publisher)
+        public LoanRepository(ILibraryContext context, IPublisher publisher) : base(context, publisher)
         {
             _loans = _context.Set<Loan>();
         }

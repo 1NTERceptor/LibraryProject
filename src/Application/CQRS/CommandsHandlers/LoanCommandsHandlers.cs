@@ -1,7 +1,6 @@
-﻿using Application.CQRS.Commands.Loans;
-using Domain;
+﻿using Application.Contracts;
+using Application.CQRS.Commands.Loans;
 using Domain.Aggregates.Loans;
-using Domain.Repository;
 using MediatR;
 
 namespace Application.CQRS.CommandsHandlers
@@ -11,9 +10,9 @@ namespace Application.CQRS.CommandsHandlers
     {
         private readonly ILoanRepository _loanRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IDataContext _dataContext;
+        private readonly ILibraryContext _dataContext;
 
-        public LoanCommandsHandlers(ILoanRepository loanRepository, IUserRepository userRepository, IDataContext dataContext)
+        public LoanCommandsHandlers(ILoanRepository loanRepository, IUserRepository userRepository, ILibraryContext dataContext)
         {
             _loanRepository = loanRepository;
             _userRepository = userRepository;

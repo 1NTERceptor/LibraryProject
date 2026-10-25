@@ -1,7 +1,7 @@
-﻿using Application.CQRS.Queries.Loans;
+﻿using Application.Contracts;
+using Application.CQRS.Queries.Loans;
 using AutoMapper;
 using Domain.Aggregates.Loans;
-using Domain.Repository;
 using MediatR;
 
 namespace Application.CQRS.QueriesHandlers

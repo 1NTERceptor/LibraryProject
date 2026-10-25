@@ -1,7 +1,7 @@
 ﻿using Application.CQRS.Queries.Persons;
 using AutoMapper;
 using Domain.Aggregates.Persons;
-using Domain.Repository;
+using Application.Contracts;
 using MediatR;
 
 namespace Application.CQRS.QueriesHandlers

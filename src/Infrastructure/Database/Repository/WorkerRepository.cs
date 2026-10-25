@@ -1,22 +1,16 @@
-﻿using Domain.Aggregates.Persons;
+﻿using Application.Contracts;
+using Domain.Aggregates.Persons;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel.Repository;
-using System;
-using System.Threading.Tasks;
 
-namespace Domain.Repository
-{
-    public interface IWorkerRepository : IRepository<Worker>
-    {
-        Task UpdateAsync(Worker worker);
-    }
-
+namespace Infrastructure.Database.Repository
+{   
     public class WorkerRepository : Repository<Worker>, IWorkerRepository
     {
         private readonly DbSet<Worker> _workers;
 
-        public WorkerRepository(IDataContext context, IPublisher publisher) : base(context, publisher)
+        public WorkerRepository(ILibraryContext context, IPublisher publisher) : base(context, publisher)
         {
             _workers = _context.Set<Worker>();
         }

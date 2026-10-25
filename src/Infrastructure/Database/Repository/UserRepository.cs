@@ -1,22 +1,18 @@
-﻿using Domain.Aggregates.Persons;
+﻿using Application.Contracts;
+using Domain.Aggregates.Persons;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel.Repository;
-using System;
-using System.Threading.Tasks;
 
-namespace Domain.Repository
+namespace Infrastructure.Database.Repository
 {
-    public interface IUserRepository : IRepository<User>
-    {    
-        Task UpdateAsync(User person);
-    }
+    
 
     public class UserRepository : Repository<User>, IUserRepository
     {
         private readonly DbSet<User> _users;
 
-        public UserRepository(IDataContext context, IPublisher publisher) : base(context, publisher)
+        public UserRepository(ILibraryContext context, IPublisher publisher) : base(context, publisher)
         {
             _users = _context.Set<User>();
         }

@@ -1,7 +1,8 @@
-﻿using AutoMapper;
+﻿using Application.Contracts;
+using AutoMapper;
 using Domain;
 using Domain.Aggregates.Books;
-using Domain.Services;
+using Infrastructure.Services;
 using Library.Messages.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,13 +21,13 @@ namespace REST_API.Controllers
     public class BooksController : ControllerBase
     {
         private readonly ILogger<BooksController> _logger;
-        private readonly IDataContext _dataContext;
+        private readonly ILibraryContext _dataContext;
         private readonly IMapper _mapper;
         private readonly IFileReader _fileReader;
 
         public BooksController(
             ILogger<BooksController> logger,
-            IDataContext dataContext,
+            ILibraryContext dataContext,
             IMapper mapper,
             IFileReader fileReader)
         {

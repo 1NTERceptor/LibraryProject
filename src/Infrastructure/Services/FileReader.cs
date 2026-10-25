@@ -1,12 +1,8 @@
-﻿using Domain;
+﻿using Application.Contracts;
 using Domain.Aggregates.Books;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Domain.Services
+namespace Infrastructure.Services
 {
     public interface IFileReader
     {
@@ -15,10 +11,10 @@ namespace Domain.Services
 
     public class FileReader : IFileReader
     {
-        private readonly IDataContext _context;
+        private readonly ILibraryContext _context;
         private StreamReader _reader = null;
 
-        public FileReader(IDataContext context) 
+        public FileReader(ILibraryContext context) 
         {
             _context = context;
         }
